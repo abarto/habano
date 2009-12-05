@@ -6,7 +6,7 @@ import com.sun.jna.win32.StdCallLibrary;
 
 /**
  * 
- * A class that wraps native calls to <code>kernel32.dll</dll> using JNA.
+ * A class that wraps native calls to <code>kernel32.dll</code> using JNA.
  * 
  * @author Agustin Barto <abarto@gmail.com>
  * 
@@ -109,5 +109,15 @@ public interface Kernel32Dll extends StdCallLibrary {
 	boolean GetDiskFreeSpaceExA(String lpDirectoryName,
 			LongByReference lpFreeBytesAvailable,
 			LongByReference lpTotalNumberOfBytes,
-			LongByReference lpTotalNumberOfFreeBytes);	
+			LongByReference lpTotalNumberOfFreeBytes);
+	
+	/**
+	 * Retrieves information about the current system. To retrieve accurate
+	 * information for an application running on WOW64, call the
+	 * GetNativeSystemInfo function.
+	 * 
+	 * @param lpSystemInfo A pointer to a SYSTEM_INFO structure that receives
+	 * the information.
+	 */
+	void GetSystemInfo(SYSTEM_INFO lpSystemInfo);
 }
