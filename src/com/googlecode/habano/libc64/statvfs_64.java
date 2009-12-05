@@ -1,24 +1,39 @@
 package com.googlecode.habano.libc64;
 
+import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
 /**
  * 
- * 64-bit implementation of a structure to contain information about a mounted filesystem.
+ * 32-bit implementation of a structure to contain information about a mounted filesystem.
  * 
  * <pre>
- * struct statvfs {
- *   unsigned long f_bsize;
- *   unsigned long f_frsize;
- *   fsblkcnt_t    f_blocks;
- *   fsblkcnt_t    f_bfree;
- *   fsblkcnt_t    f_bavail;
- *   fsfilcnt_t    f_files;
- *   fsfilcnt_t    f_ffree;
- *   fsfilcnt_t    f_favail;
- *   unsigned long f_fsid;
- *   unsigned long f_flag;
- *   unsigned long f_namemax;
+ * struct statvfs
+ * {
+ *   unsigned long int f_bsize;
+ *   unsigned long int f_frsize;
+ * #ifndef __USE_FILE_OFFSET64
+ *   __fsblkcnt_t f_blocks;
+ *   __fsblkcnt_t f_bfree;
+ *   __fsblkcnt_t f_bavail;
+ *   __fsfilcnt_t f_files;
+ *   __fsfilcnt_t f_ffree;
+ *   __fsfilcnt_t f_favail;
+ * #else
+ *   __fsblkcnt64_t f_blocks;
+ *   __fsblkcnt64_t f_bfree;
+ *   __fsblkcnt64_t f_bavail;
+ *   __fsfilcnt64_t f_files;
+ *   __fsfilcnt64_t f_ffree;
+ *   __fsfilcnt64_t f_favail;
+ * #endif
+ *   unsigned long int f_fsid;
+ * #ifdef _STATVFSBUF_F_UNUSED
+ *   int __f_unused;
+ * #endif
+ *   unsigned long int f_flag;
+ *   unsigned long int f_namemax;
+ *   int __f_spare[6];
  * };
  * </pre>
  * 
@@ -118,11 +133,16 @@ public class statvfs_64 extends Structure {
 	 * mount flags
 	 */
 	public long f_flag;
-
+	
 	/**
 	 * <p><code>unsigned long f_namemax</code></p>
 	 * 
 	 * maximum filename length
 	 */
 	public long f_namemax;
+	
+	/**
+	 * <p><code>int __f_spare[6]</code></p>
+	 */
+	public int[] __f_spare = new int[6];
 }
