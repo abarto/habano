@@ -5,7 +5,7 @@ import com.sun.jna.Structure;
 
 /**
  * 
- * A structure to contain information about a mounted filesystem.
+ * 32-bit implementation of a structure to contain information about a mounted filesystem.
  * 
  * <pre>
  * struct statvfs {

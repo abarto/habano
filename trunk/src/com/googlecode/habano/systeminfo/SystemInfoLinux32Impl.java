@@ -46,7 +46,7 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		MemoryInfo memoryInfo = new MemoryInfo();
 		
 		try {
-			Map<String, Integer> memInfo = this.readProcFsMemInfo();
+			Map<String, Long> memInfo = this.readProcFsMemInfo();
 			
 			memoryInfo.setTotalSystemMemory(memInfo.get("MemTotal") * 1000L);
 			memoryInfo.setAvailableSystemMemory(memInfo.get("MemFree") * 1000L);
@@ -114,8 +114,8 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return resultp;
 	} 
 	
-	private Map<String, Integer> readProcFsMemInfo() throws NumberFormatException, IOException {
-		final Map<String, Integer> procFsMemInfo = new HashMap<String, Integer>();
+	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
+		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
 
 		this.readProcFs("/proc/meminfo", new ProcFsEntryHandler() {
 			@Override
@@ -123,7 +123,7 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 				Matcher matcher = MEMINFO_PATTERN.matcher(entry);
 				
 				if (matcher.matches()) {
-					procFsMemInfo.put(matcher.group(1), Integer.valueOf(matcher.group(2)));
+					procFsMemInfo.put(matcher.group(1), Long.valueOf(matcher.group(2)));
 				}
 			}});
 		

@@ -10,6 +10,8 @@ import com.sun.jna.ptr.IntByReference;
  * linking "libc.so" dynamically. The code was mostly based on GNU libc, but it
  * should be compatible with any implementation of the standard library.
  * 
+ * This is the 32-bit implementation.
+ * 
  * @see libc (7) manpage
  * @see <a href="http://www.gnu.org/software/libc/manual/html_node/index.html">The GNU C Library</a>
  * @author Agustin Barto <abarto@gmail.com>
@@ -47,6 +49,7 @@ public interface CLibrary extends Library {
 	 * @see gettimeofday (2) manpage
 	 * @see <a href="http://www.gnu.org/software/libc/manual/html_node/High_002dResolution-Calendar.html#High_002dResolution-Calendar">High-Resolution Calendar - The GNU C Library</a>
 	 */
+	@SuppressWarnings("deprecation")
 	int gettimeofday(timeval tv, timezone tz);
 	
 	/**

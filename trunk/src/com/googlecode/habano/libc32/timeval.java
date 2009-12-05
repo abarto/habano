@@ -3,7 +3,19 @@ package com.googlecode.habano.libc32;
 import com.sun.jna.Structure;
 
 /**
+ * 
+ * 32-bit implementation of a structure to contain information about the system
+ * time.
+ * 
+ * <pre>
+ * struct timeval {
+ *   time_t      tv_sec;
+ *   suseconds_t tv_usec;
+ * };
+ * <pre>
+ * 
  * @author Agustin Barto <abarto@gmail.com>
+ * @see <a href="http://www.gnu.org/s/libc/manual/html_node/Elapsed-Time.html">Elapsed Time - The GNU C Library</a>
  *
  */
 public class timeval extends Structure {
@@ -31,12 +43,16 @@ public class timeval extends Structure {
 	public static class ByReference extends timeval implements Structure.ByReference { }
 	
 	/**
+	 * <p><code>time_t tv_sec</code></p>
 	 * 
+	 * seconds
 	 */
 	public int tv_sec;
 	
 	/**
+	 * <p><code>suseconds_t tv_usec</code></p>
 	 * 
+	 * microseconds
 	 */
 	public int tv_usec;
 }
