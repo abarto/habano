@@ -1,10 +1,10 @@
-package com.googlecode.habano.libc32;
+package com.googlecode.habano.libc64;
 
 import com.sun.jna.Structure;
 
 /**
  * 
- * 32-bit implementation of a structure to contain information about the system
+ * 64-bit implementation of a structure to contain information about the system
  * time.
  * 
  * <pre>
@@ -25,7 +25,7 @@ import com.sun.jna.Structure;
  * @see <a href="http://www.gnu.org/s/libc/manual/html_node/Broken_002ddown-Time.html">Broken-down Time - The GNU C Library</a>
  *
  */
-public class tm extends Structure {
+public class tm_64 extends Structure {
 	/**
 	 * 
 	 * Tagged inner class to indicate the address of an instance of the
@@ -36,7 +36,7 @@ public class tm extends Structure {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByValue extends tm implements Structure.ByValue { }
+	public static class ByValue extends tm_64 implements Structure.ByValue { }
 
 	/**
 	 * 
@@ -47,7 +47,7 @@ public class tm extends Structure {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByReference extends tm implements Structure.ByReference { }
+	public static class ByReference extends tm_64 implements Structure.ByReference { }
 	
 	/**
 	 * <p><code>int tm_sec</code></p>

@@ -1,10 +1,10 @@
-package com.googlecode.habano.libc64;
+package com.googlecode.habano.libc32;
 
 import com.sun.jna.Structure;
 
 /**
  * 
- * 64-bit implementation of a structure to contain information about the system
+ * 32-bit implementation of a structure to contain information about the system
  * timezone.
  * 
  * <em>THIS STRUCTURE IS OBSOLETE AND IT'S NOT INTENDED TO BE USED.</em>
@@ -21,7 +21,7 @@ import com.sun.jna.Structure;
  *
  */
 @Deprecated
-public class timezone {
+public class timezone_32 {
 	/**
 	 * 
 	 * Tagged inner class to indicate the address of an instance of the
@@ -32,7 +32,7 @@ public class timezone {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByValue extends timezone implements Structure.ByValue { }
+	public static class ByValue extends timezone_32 implements Structure.ByValue { }
 
 	/**
 	 * 
@@ -43,7 +43,7 @@ public class timezone {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByReference extends timezone implements Structure.ByReference { }
+	public static class ByReference extends timezone_32 implements Structure.ByReference { }
 	
 	/**
 	 * <p><code>int tz_minuteswest</code></p>

@@ -18,7 +18,7 @@ import com.sun.jna.Structure;
  * @see <a href="http://www.gnu.org/s/libc/manual/html_node/Elapsed-Time.html">Elapsed Time - The GNU C Library</a>
  *
  */
-public class timeval extends Structure {
+public class timeval_64 extends Structure {
 	/**
 	 * 
 	 * Tagged inner class to indicate the address of an instance of the
@@ -29,7 +29,7 @@ public class timeval extends Structure {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByValue extends timeval implements Structure.ByValue { }
+	public static class ByValue extends timeval_64 implements Structure.ByValue { }
 
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class timeval extends Structure {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByReference extends timeval implements Structure.ByReference { }
+	public static class ByReference extends timeval_64 implements Structure.ByReference { }
 	
 	/**
 	 * <p><code>time_t tv_sec</code></p>
