@@ -33,7 +33,7 @@ public abstract class SystemInfo {
 			}
 		} else if (Platform.isLinux()) {
 			if (Platform.is64Bit()) {
-				// TODO Implement 64-bit Linux platform support
+				instance = new SystemInfoLinux64Impl();
 			} else {
 				instance = new SystemInfoLinux32Impl();
 			}
