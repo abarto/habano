@@ -1,4 +1,4 @@
-package com.googlecode.habano.libc;
+package com.googlecode.habano.libc32;
 
 import com.sun.jna.Structure;
 
@@ -6,7 +6,7 @@ import com.sun.jna.Structure;
  * @author Agustin Barto <abarto@gmail.com>
  *
  */
-public class timezone {
+public class tm extends Structure {
 	/**
 	 * 
 	 * Tagged inner class to indicate the address of an instance of the
@@ -17,7 +17,7 @@ public class timezone {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByValue extends timezone implements Structure.ByValue { }
+	public static class ByValue extends tm implements Structure.ByValue { }
 
 	/**
 	 * 
@@ -28,15 +28,50 @@ public class timezone {
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
-	public static class ByReference extends timezone implements Structure.ByReference { }
+	public static class ByReference extends tm implements Structure.ByReference { }
 	
 	/**
 	 * 
 	 */
-	public int tz_minuteswest;
-	
+	public int tm_sec;
+
 	/**
 	 * 
 	 */
-	public int tz_dsttime;
+	public int tm_min;
+
+	/**
+	 * 
+	 */
+	public int tm_hour;
+
+	/**
+	 * 
+	 */
+	public int tm_mday;
+
+	/**
+	 * 
+	 */
+	public int tm_mon;
+
+	/**
+	 * 
+	 */
+	public int tm_year;
+
+	/**
+	 * 
+	 */
+	public int tm_wday;
+
+	/**
+	 * 
+	 */
+	public int tm_yday;
+
+	/**
+	 * 
+	 */
+	public int tm_isdst;
 }

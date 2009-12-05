@@ -1,4 +1,4 @@
-package com.googlecode.habano.libc;
+package com.googlecode.habano.libc32;
 
 import com.sun.jna.Structure;
 
