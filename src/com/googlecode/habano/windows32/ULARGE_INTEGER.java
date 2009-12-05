@@ -29,11 +29,10 @@ import com.sun.jna.Union;
 public class ULARGE_INTEGER extends Union {
 	/**
 	 * 
-	 * Tagged inner class to indicate the address of an instance of the
-	 * Structure type is to be used within a Structure definition rather than
-	 * nesting the full Structure contents.
+	 * Tagged inner class to indicate the value of an instance of the Structure
+	 * type is to be used in function invocations rather than its address.
 	 * 
-	 * @see Structure.ByReference
+	 * @see Structure.ByValue
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
@@ -41,10 +40,11 @@ public class ULARGE_INTEGER extends Union {
 
 	/**
 	 * 
-	 * Tagged inner class to indicate the value of an instance of the Structure
-	 * type is to be used in function invocations rather than its address.
+	 * Tagged inner class to indicate the address of an instance of the
+	 * Structure type is to be used within a Structure definition rather than
+	 * nesting the full Structure contents.
 	 * 
-	 * @see Structure.ByValue
+	 * @see Structure.ByReference
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
@@ -63,6 +63,17 @@ public class ULARGE_INTEGER extends Union {
 	public static class DoubleWord extends Structure {
 		/**
 		 * 
+		 * Tagged inner class to indicate the value of an instance of the Structure
+		 * type is to be used in function invocations rather than its address.
+		 * 
+		 * @see Structure.ByValue
+		 * @author Agustin Barto <abarto@gmail.com>
+		 *
+		 */
+		public static class ByValue extends DoubleWord implements Structure.ByValue { }
+
+		/**
+		 * 
 		 * Tagged inner class to indicate the address of an instance of the
 		 * Structure type is to be used within a Structure definition rather than
 		 * nesting the full Structure contents.
@@ -71,19 +82,7 @@ public class ULARGE_INTEGER extends Union {
 		 * @author Agustin Barto <abarto@gmail.com>
 		 *
 		 */
-		public static class ByValue extends DoubleWord implements Structure.ByValue { }
-
-		/**
-		 * 
-		 * Tagged inner class to indicate the value of an instance of the Structure
-		 * type is to be used in function invocations rather than its address.
-		 * 
-		 * @see Structure.ByValue
-		 * @author Agustin Barto <abarto@gmail.com>
-		 *
-		 */
 		public static class ByReference extends DoubleWord implements Structure.ByReference { }
-		
 		
 		/**
 		 * <p><code>DWORD LowPart</code></p>

@@ -21,11 +21,10 @@ import com.sun.jna.Structure;
 public class timeval_32 extends Structure {
 	/**
 	 * 
-	 * Tagged inner class to indicate the address of an instance of the
-	 * Structure type is to be used within a Structure definition rather than
-	 * nesting the full Structure contents.
+	 * Tagged inner class to indicate the value of an instance of the Structure
+	 * type is to be used in function invocations rather than its address.
 	 * 
-	 * @see Structure.ByReference
+	 * @see Structure.ByValue
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
@@ -33,10 +32,11 @@ public class timeval_32 extends Structure {
 
 	/**
 	 * 
-	 * Tagged inner class to indicate the value of an instance of the Structure
-	 * type is to be used in function invocations rather than its address.
+	 * Tagged inner class to indicate the address of an instance of the
+	 * Structure type is to be used within a Structure definition rather than
+	 * nesting the full Structure contents.
 	 * 
-	 * @see Structure.ByValue
+	 * @see Structure.ByReference
 	 * @author Agustin Barto <abarto@gmail.com>
 	 *
 	 */
