@@ -11,10 +11,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.googlecode.habano.libc32.CLibrary;
-import com.googlecode.habano.libc32.statvfs;
-import com.googlecode.habano.libc32.timeval;
-import com.googlecode.habano.libc32.tm;
+import com.googlecode.habano.libc32.CLibrary32;
+import com.googlecode.habano.libc32.statvfs_32;
+import com.googlecode.habano.libc32.timeval_32;
+import com.googlecode.habano.libc32.tm_32;
 import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
@@ -25,7 +25,7 @@ import com.sun.jna.ptr.IntByReference;
  * An implementation of {@link SystemInfo} to be used when the JVM is running
  * on a 32-bit Linux platform. Most of the information is extracted calling
  * the standar c library (libc) functions that are accessed through
- * {@link CLibrary}. 
+ * {@link CLibrary32}. 
  * 
  * @author Agustin Barto <abarto@gmail.com>
  * 
@@ -67,17 +67,17 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	 */
 	@Override
 	public long getSystemTimeInMillis() {
-		timeval tv = this.callGetTimeOfDay();
+		timeval_32 tv = this.callGetTimeOfDay();
 
 		return tv.tv_sec * 1000L + tv.tv_usec / 1000L;
 	}
 
-	private timeval callGetTimeOfDay() {
-		timeval tv = new timeval();
+	private timeval_32 callGetTimeOfDay() {
+		timeval_32 tv = new timeval_32();
 
 		// According to the manpage the timezone structure is obsolete and it
 		// should always be NULL;
-		CLibrary.INSTANCE.gettimeofday(tv, null);
+		CLibrary32.INSTANCE.gettimeofday(tv, null);
 
 		return tv;
 	}
@@ -91,8 +91,8 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	public SystemTimeInfo getSystemTimeInfo() {
 		SystemTimeInfo systemTimeInfo = new SystemTimeInfo();
 		
-		timeval tv = this.callGetTimeOfDay();
-		tm result = this.callGetLocaltime_r(new IntByReference(tv.tv_sec));
+		timeval_32 tv = this.callGetTimeOfDay();
+		tm_32 result = this.callGetLocaltime_r(new IntByReference(tv.tv_sec));
 		
 		systemTimeInfo.setDayOfMonth(result.tm_mday);
 		systemTimeInfo.setDayOfWeek(result.tm_wday);
@@ -106,10 +106,10 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return systemTimeInfo;
 	}
 
-	private tm callGetLocaltime_r(IntByReference timep) {
-		tm resultp = new tm();
+	private tm_32 callGetLocaltime_r(IntByReference timep) {
+		tm_32 resultp = new tm_32();
 		
-		CLibrary.INSTANCE.localtime_r(timep, resultp);
+		CLibrary32.INSTANCE.localtime_r(timep, resultp);
 		
 		return resultp;
 	} 
@@ -163,7 +163,7 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	 */
 	@Override
 	public FileSystemInfo getFileSystemInfo(String path) {
-		statvfs buf = this.callStatvfs(path);
+		statvfs_32 buf = this.callStatvfs(path);
 		
 		FileSystemInfo fileSystemInfo = new FileSystemInfo();
 		fileSystemInfo.setPath(path);
@@ -173,10 +173,10 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return fileSystemInfo;
 	}
 	
-	private statvfs callStatvfs(String path) {
-		statvfs buf = new statvfs();
+	private statvfs_32 callStatvfs(String path) {
+		statvfs_32 buf = new statvfs_32();
 		
-		CLibrary.INSTANCE.statvfs(path, buf);
+		CLibrary32.INSTANCE.statvfs(path, buf);
 		
 		return buf;
 	}
