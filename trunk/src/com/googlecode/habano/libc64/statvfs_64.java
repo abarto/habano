@@ -27,6 +27,29 @@ import com.sun.jna.Structure;
  */
 public class statvfs_64 extends Structure {
 	/**
+	 * 
+	 * Tagged inner class to indicate the address of an instance of the
+	 * Structure type is to be used within a Structure definition rather than
+	 * nesting the full Structure contents.
+	 * 
+	 * @see Structure.ByReference
+	 * @author Agustin Barto <abarto@gmail.com>
+	 *
+	 */
+	public static class ByValue extends statvfs_64 implements Structure.ByValue { }
+
+	/**
+	 * 
+	 * Tagged inner class to indicate the value of an instance of the Structure
+	 * type is to be used in function invocations rather than its address.
+	 * 
+	 * @see Structure.ByValue
+	 * @author Agustin Barto <abarto@gmail.com>
+	 *
+	 */
+	public static class ByReference extends statvfs_64 implements Structure.ByReference { }
+	
+	/**
 	 * <p><code>unsigned long f_bsize</code></p>
 	 * 
 	 * file system block size
