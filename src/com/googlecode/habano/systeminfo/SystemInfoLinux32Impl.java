@@ -167,8 +167,8 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		
 		FileSystemInfo fileSystemInfo = new FileSystemInfo();
 		fileSystemInfo.setPath(path);
-		fileSystemInfo.setSize(buf.f_blocks * buf.f_frsize.longValue());
-		fileSystemInfo.setFreeSpace(buf.f_bavail * buf.f_frsize.longValue());
+		fileSystemInfo.setSize(buf.f_blocks.longValue() * buf.f_frsize.longValue());
+		fileSystemInfo.setFreeSpace(buf.f_bavail.longValue() * buf.f_frsize.longValue());
 
 		return fileSystemInfo;
 	}
