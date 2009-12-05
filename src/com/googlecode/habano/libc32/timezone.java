@@ -3,9 +3,24 @@ package com.googlecode.habano.libc32;
 import com.sun.jna.Structure;
 
 /**
+ * 
+ * 32-bit implementation of a structure to contain information about the system
+ * timezone.
+ * 
+ * <em>THIS STRUCTURE IS OBSOLETE AND IT'S NOT INTENDED TO BE USED.</em>
+ * 
+ * <pre>
+ * struct timezone {
+ *   int tz_minuteswest;
+ *   int tz_dsttime;
+ * };
+ * </pre>
+ * 
  * @author Agustin Barto <abarto@gmail.com>
+ * @see <a href="http://www.gnu.org/s/libc/manual/html_node/High_002dResolution-Calendar.html">High-Resolution Calendar - The GNU C Library</a>
  *
  */
+@Deprecated
 public class timezone {
 	/**
 	 * 
@@ -31,12 +46,16 @@ public class timezone {
 	public static class ByReference extends timezone implements Structure.ByReference { }
 	
 	/**
+	 * <p><code>int tz_minuteswest</code></p>
 	 * 
+	 * Minutes west of Greenwich.
 	 */
 	public int tz_minuteswest;
 	
 	/**
+	 * <p><code>int tz_dsttime</code></p>
 	 * 
+	 * Type of DST correction.
 	 */
 	public int tz_dsttime;
 }
