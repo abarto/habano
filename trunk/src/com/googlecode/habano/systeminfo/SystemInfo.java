@@ -52,7 +52,7 @@ public abstract class SystemInfo {
 	public abstract MemoryInfo getMemoryInfo();
 
 	/**
-	 * Restrieves date and time information of the system, up to the
+	 * Retrieves date and time information of the system, up to the
 	 * millisecond.
 	 * 
 	 * @return @{link SystemTimeInfo} containing the current date and time of

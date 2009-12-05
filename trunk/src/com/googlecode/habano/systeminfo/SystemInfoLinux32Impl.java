@@ -11,10 +11,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.googlecode.habano.libc.CLibrary;
-import com.googlecode.habano.libc.statvfs;
-import com.googlecode.habano.libc.timeval;
-import com.googlecode.habano.libc.tm;
+import com.googlecode.habano.libc32.CLibrary;
+import com.googlecode.habano.libc32.statvfs;
+import com.googlecode.habano.libc32.timeval;
+import com.googlecode.habano.libc32.tm;
 import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
@@ -164,8 +164,6 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	@Override
 	public FileSystemInfo getFileSystemInfo(String path) {
 		statvfs buf = this.callStatvfs(path);
-		
-		System.out.println(buf);
 		
 		FileSystemInfo fileSystemInfo = new FileSystemInfo();
 		fileSystemInfo.setPath(path);
