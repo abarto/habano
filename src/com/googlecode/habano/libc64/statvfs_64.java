@@ -1,6 +1,5 @@
 package com.googlecode.habano.libc64;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
 /**
