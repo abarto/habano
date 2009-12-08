@@ -14,109 +14,116 @@ import com.sun.jna.win32.StdCallLibrary;
  */
 public interface Advapi32Dll  extends StdCallLibrary {
 	/**
-	 * <p><code>#define KEY_QUERY_VALUE 1</code></p>
+	 * KEY_QUERY_VALUE (0x0001). Required to query the values of a registry key.
 	 * 
-	 * REGSAM value. Permission to query subkey data.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	public static final int KEY_QUERY_VALUE = 1;
+	public static final int KEY_QUERY_VALUE = 0x0001;
 
 	/**
-	 * <p><code>#define KEY_SET_VALUE 2</code></p>
+	 * KEY_SET_VALUE (0x0002). Required to create, delete, or set a registry
+	 * value.
 	 * 
-	 * REGSAM value. Permission to set subkey data.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	public static final int KEY_SET_VALUE = 2;
+	public static final int KEY_SET_VALUE = 0x0002;
 
 	/**
-	 * <p><code>#define KEY_CREATE_SUB_KEY 4</code></p>
+	 * KEY_CREATE_SUB_KEY (0x0004). Required to create a subkey of a registry
+	 * key.
 	 * 
-	 * REGSAM value. Permission to create subkeys.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	public static final int KEY_CREATE_SUB_KEY = 4;
+	public static final int KEY_CREATE_SUB_KEY = 0x0004;
 
 	/**
-	 * <p><code>#define KEY_ENUMERATE_SUB_KEYS 8</code></p>
+	 * KEY_ENUMERATE_SUB_KEYS (0x0008). Required to enumerate the subkeys of a
+	 * registry key.
 	 * 
-	 * REGSAM value. Permission to enumerate subkeys.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	public static final int KEY_ENUMERATE_SUB_KEYS = 8;
+	public static final int KEY_ENUMERATE_SUB_KEYS = 0x0008;
 
 	/**
-	 * <p><code>#define KEY_NOTIFY 16</code></p>
+	 * KEY_NOTIFY (0x0010). Required to request change notifications for a
+	 * registry key or for subkeys of a registry key.
 	 * 
-	 * REGSAM value. Permission for change notification.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	public static final int KEY_NOTIFY = 16;
+	public static final int KEY_NOTIFY = 0x0010;
 
 	/**
-	 * <p><code>#define KEY_CREATE_LINK 32</code></p>
+	 * KEY_CREATE_LINK (0x0020). Reserved for system use.
 	 * 
-	 * REGSAM value. ermission to create a symbolic link.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	public static final int KEY_CREATE_LINK = 32;
+	public static final int KEY_CREATE_LINK = 0x0020;
 
 	/**
-	 * <p><code>#define KEY_WRITE 0x20006</code></p>
+	 * KEY_WRITE (0x20006). Combines the STANDARD_RIGHTS_WRITE, KEY_SET_VALUE,
+	 * and KEY_CREATE_SUB_KEY access rights.
 	 * 
-	 * REGSAM value. Combination of KEY_SET_VALUE and KEY_CREATE_SUB_KEY
-	 * access.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
 	public static final int KEY_WRITE = 0x20006;
 
 	/**
-	 * <p><code>#define KEY_EXECUTE 0x20019</code></p>
+	 * KEY_EXECUTE (0x20019). Equivalent to KEY_READ.
 	 * 
-	 * REGSAM value. Permission to query subkey data.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
 	public static final int KEY_EXECUTE = 0x20019;
 
 	/**
-	 * <p><code>#define KEY_READ 0x20019</code></p>
+	 * KEY_READ (0x20019). Combines the STANDARD_RIGHTS_READ, KEY_QUERY_VALUE,
+	 * KEY_ENUMERATE_SUB_KEYS, and KEY_NOTIFY values.
 	 * 
-	 * REGSAM value. Permission for read access.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
 	public static final int KEY_READ = 0x20019;
 
 	/**
-	 * <p><code>#define KEY_WOW64_64KEY 0x0100</code></p>
+	 * KEY_WOW64_64KEY (0x0100). Indicates that an application on 64-bit
+	 * Windows should operate on the 64-bit registry view. For more
+	 * information, see <a href="http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx">Accessing an Alternate Registry View</a>.
+	 * This flag must be combined using the OR operator with the other flags in
+	 * this table that either query or access registry values. Windows 2000:
+	 * This flag is not supported.
+
 	 * 
-	 * REGSAM value.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
 	public static final int KEY_WOW64_64KEY = 0x0100;
 
 	/**
-	 * <p><code>#define KEY_WOW64_32KEY 0x0200</code></p>
+	 * KEY_WOW64_32KEY (0x0200). Indicates that an application on 64-bit
+	 * Windows should operate on the 32-bit registry view. For more
+	 * information, see <a href="http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx">Accessing an Alternate Registry View</a>.
+	 * This flag must be combined using the OR operator with the other flags in
+	 * this table that either query or access registry values. Windows 2000:
+	 * This flag is not supported.
 	 * 
-	 * REGSAM value.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
 	public static final int KEY_WOW64_32KEY = 0x0200;
 
 	/**
-	 * <p><code>#define KEY_ALL_ACCESS 0xf003f</code></p>
+	 * KEY_ALL_ACCESS (0xF003F). Combines the STANDARD_RIGHTS_REQUIRED,
+	 * KEY_QUERY_VALUE, KEY_SET_VALUE, KEY_CREATE_SUB_KEY,
+	 * KEY_ENUMERATE_SUB_KEYS, KEY_NOTIFY, and KEY_CREATE_LINK access rights.
 	 * 
-	 * REGSAM value. Combination of {@link #KEY_QUERY_VALUE},
-	 * {@link #KEY_ENUMERATE_SUB_KEYS}, {@link #KEY_NOTIFY},
-	 * {@link #KEY_CREATE_SUB_KEY}, {@link #KEY_CREATE_LINK}, and
-	 * {@link #KEY_SET_VALUE} access.
-	 * 
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
 	public static final int KEY_ALL_ACCESS = 0xf003f;
@@ -146,9 +153,16 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * the RegCreateKeyEx or RegOpenKeyEx function, or it can be one of the
 	 * following predefined keys: HKEY_CLASSES_ROOT, HKEY_CURRENT_USER,
 	 * HKEY_LOCAL_MACHINE, HKEY_USERS.
-	 * @param lpSubKey
-	 * @param ulOptions
-	 * @param samDesired
+	 * @param lpSubKey The name of the registry subkey to be opened. Key names
+	 * are not case sensitive. If this parameter is NULL or a pointer to an
+	 * empty string, the function will open a new handle to the key identified
+	 * by the hKey parameter. For more information, see
+	 * <a href="http://msdn.microsoft.com/en-us/library/ms724872(VS.85).aspx">Registry Element Size Limits.</a>
+	 * @param ulOptions This parameter is reserved and must be zero.
+	 * @param samDesired A mask that specifies the desired access rights to the
+	 * key. The function fails if the security descriptor of the key does not
+	 * permit the requested access for the calling process. For more
+	 * information, see <a href="">Registry Key Security and Access Rights.</a>
 	 * @param phkResult
 	 * @return
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724897(VS.85).aspx">RegOpenKeyEx Function (Windows)</a>
