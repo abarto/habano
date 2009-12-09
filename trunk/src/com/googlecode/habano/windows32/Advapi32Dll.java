@@ -2,6 +2,7 @@ package com.googlecode.habano.windows32;
 
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
+import com.sun.jna.Pointer;
 import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
@@ -15,9 +16,6 @@ import com.sun.jna.win32.StdCallLibrary;
  *
  */
 public interface Advapi32Dll  extends StdCallLibrary {
-	// REGSAM values
-	
-	
 	/**
 	 * The actual object on which to make the method calls.
 	 */
@@ -281,5 +279,225 @@ public interface Advapi32Dll  extends StdCallLibrary {
 			IntByReference lpType,
 			ByteByReference lpData,
 			IntByReference lpcbData
+			);
+	
+	/**
+	 * Retrieves the type and data for the specified value name associated with
+	 * an open registry key. To ensure that any string values (REG_SZ,
+	 * REG_MULTI_SZ, and REG_EXPAND_SZ) returned are null-terminated, use the
+	 * RegGetValue function.
+	 * 
+	 * <pre>
+	 * LONG WINAPI RegQueryValueEx(
+	 *   __in         HKEY hKey,
+	 *   __in_opt     LPCTSTR lpValueName,
+	 *   __reserved   LPDWORD lpReserved,
+	 *   __out_opt    LPDWORD lpType,
+	 *   __out_opt    LPBYTE lpData,
+	 *   __inout_opt  LPDWORD lpcbData
+	 * );
+	 * </pre>
+	 * 
+	 * @param hKey A handle to an open registry key. The key must have been
+	 * opened with the KEY_QUERY_VALUE access right. For more information, see
+	 * <a href="http://msdn.microsoft.com/en-us/library/ms724911(VS.85).aspx">Registry Key Security and Access Rights</a>.
+	 * This handle is returned by the RegCreateKeyEx, RegCreateKeyTransacted,
+	 * RegOpenKeyEx, or RegOpenKeyTransacted function. It can also be one of
+	 * the following predefined keys: HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG,
+	 * HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA,
+	 * HKEY_PERFORMANCE_NLSTEXT, HKEY_PERFORMANCE_TEXT, HKEY_USERS.
+	 * @param lpValueName The name of the registry value. If lpValueName is
+	 * NULL or an empty string, "", the function retrieves the type and data
+	 * for the key's unnamed or default value, if any. If lpValueName specifies
+	 * a key that is not in the registry, the function returns
+	 * ERROR_FILE_NOT_FOUND. Keys do not automatically have an unnamed or
+	 * default value. Unnamed values can be of any type. For more information, see Registry Element Size Limits.
+	 * @param lpReserved This parameter is reserved and must be NULL.
+	 * @param lpType A pointer to a variable that receives a code indicating
+	 * the type of data stored in the specified value. For a list of the
+	 * possible type codes, see <a href="http://msdn.microsoft.com/en-us/library/ms724884(VS.85).aspx">Registry Value Types</a>.
+	 * The lpType parameter can be NULL if the type code is not required.
+	 * @param lpData A pointer to a buffer that receives the value's data. This
+	 * parameter can be NULL if the data is not required.
+	 * @param lpcbData A pointer to a variable that specifies the size of the
+	 * buffer pointed to by the lpData parameter, in bytes. When the function
+	 * returns, this variable contains the size of the data copied to lpData.
+	 * The lpcbData parameter can be NULL only if lpData is NULL. If the data
+	 * has the REG_SZ, REG_MULTI_SZ or REG_EXPAND_SZ type, this size includes
+	 * any terminating null character or characters unless the data was stored
+	 * without them. For more information, see Remarks. If the buffer specified
+	 * by lpData parameter is not large enough to hold the data, the function
+	 * returns ERROR_MORE_DATA and stores the required buffer size in the
+	 * variable pointed to by lpcbData. In this case, the contents of the
+	 * lpData buffer are undefined. If lpData is NULL, and lpcbData is
+	 * non-NULL, the function returns ERROR_SUCCESS and stores the size of the
+	 * data, in bytes, in the variable pointed to by lpcbData. This enables an
+	 * application to determine the best way to allocate a buffer for the
+	 * value's data. If hKey specifies HKEY_PERFORMANCE_DATA and the lpData
+	 * buffer is not large enough to contain all of the returned data,
+	 * RegQueryValueEx returns ERROR_MORE_DATA and the value returned through
+	 * the lpcbData parameter is undefined. This is because the size of the
+	 * performance data can change from one call to the next. In this case, you
+	 * must increase the buffer size and call RegQueryValueEx again passing the
+	 * updated buffer size in the lpcbData parameter. Repeat this until the
+	 * function succeeds. You need to maintain a separate variable to keep
+	 * track of the buffer size, because the value returned by lpcbData is
+	 * unpredictable. If the lpValueName registry value does not exist,
+	 * RegQueryValueEx returns ERROR_FILE_NOT_FOUND and the value returned
+	 * through the lpcbData parameter is undefined.
+	 * @return If the function succeeds, the return value is ERROR_SUCCESS. If
+	 * the function fails, the return value is a system error code. If the
+	 * lpData buffer is too small to receive the data, the function returns
+	 * ERROR_MORE_DATA. If the lpValueName registry value does not exist, the
+	 * function returns ERROR_FILE_NOT_FOUND.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724911(VS.85).aspx">RegQueryValueEx Function (Windows)</a>
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>   
+	 */
+	NativeLong RegQueryValueExA(
+			int hKey,
+			String lpValueName,
+			IntByReference lpReserved,
+			IntByReference lpType,
+			ByteByReference lpData,
+			IntByReference lpcbData
+			);
+	
+	/**
+	 * Retrieves the type and data for the specified registry value.
+	 * 
+	 * <pre>
+	 * LONG WINAPI RegGetValue(
+	 *   __in         HKEY hkey,
+	 *   __in_opt     LPCTSTR lpSubKey,
+	 *   __in_opt     LPCTSTR lpValue,
+	 *   __in_opt     DWORD dwFlags,
+	 *   __out_opt    LPDWORD pdwType,
+	 *   __out_opt    PVOID pvData,
+	 *   __inout_opt  LPDWORD pcbData
+	 * );
+	 * </pre>
+	 * 
+	 * @param hkey A handle to an open registry key. The key must have been
+	 * opened with the KEY_QUERY_VALUE access right. For more information, see
+	 * <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>.
+	 * This handle is returned by the RegCreateKeyEx, RegCreateKeyTransacted,
+	 * RegOpenKeyEx, or RegOpenKeyTransacted function. It can also be one of
+	 * the following predefined keys: HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG,
+	 * HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA,
+	 * HKEY_PERFORMANCE_NLSTEXT, HKEY_PERFORMANCE_TEXT, HKEY_USERS.
+	 * @param lpSubKey The name of the registry key. This key must be a subkey
+	 * of the key specified by the hkey parameter. Key names are not case
+	 * sensitive.
+	 * @param lpValue The name of the registry value. If this parameter is NULL
+	 * or an empty string, "", the function retrieves the type and data for the
+	 * key's unnamed or default value, if any. For more information, see
+	 * Registry Element Size Limits. Keys do not automatically have an unnamed
+	 * or default value. Unnamed values can be of any type.
+	 * @param dwFlags The flags that restrict the data type of value to be
+	 * queried. If the data type of the value does not meet this criteria, the
+	 * function fails. This parameter can be one or more of the following
+	 * values.
+	 * <table>
+	 *   <tr>
+	 *     <th>Value</th>
+	 *     <th>Meaning</th>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_ANY 0x0000ffff</td>
+	 *     <td>No type restriction.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_DWORD 0x00000018</td>
+	 *     <td>Restrict type to 32-bit RRF_RT_REG_BINARY | RRF_RT_REG_DWORD.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_QWORD 0x00000048</td>
+	 *     <td>Restrict type to 64-bit RRF_RT_REG_BINARY | RRF_RT_REG_DWORD.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_BINARY 0x00000008</td>
+	 *     <td>Restrict type to REG_BINARY.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_DWORD 0x00000010</td>
+	 *     <td>Restrict type to REG_DWORD.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_EXPAND_SZ 0x00000004</td>
+	 *     <td>Restrict type to REG_EXPAND_SZ.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_MULTI_SZ 0x00000020</td>
+	 *     <td>Restrict type to REG_MULTI_SZ.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_NONE 0x00000001</td>
+	 *     <td>Restrict type to REG_NONE.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_QWORD 0x00000040</td>
+	 *     <td>Restrict type to REG_QWORD.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_RT_REG_SZ 0x00000002</td>
+	 *     <td>Restrict type to REG_SZ.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_NOEXPAND 0x10000000</td>
+	 *     <td>Do not automatically expand environment strings if the value is of type REG_EXPAND_SZ.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>RRF_ZEROONFAILURE 0x20000000</td>
+	 *     <td>If pvData is not NULL, set the contents of the buffer to zeroes on failure.</td>
+	 *   </tr>
+	 * </table>
+	 * @param pdwType A pointer to a variable that receives a code indicating
+	 * the type of data stored in the specified value. For a list of the
+	 * possible type codes, see Registry Value Types. This parameter can be
+	 * NULL if the type is not required.
+	 * @param pvData A pointer to a buffer that receives the value's data. This
+	 * parameter can be NULL if the data is not required. If the data is a
+	 * string, the function checks for a terminating null character. If one is
+	 * not found, the string is stored with a null terminator if the buffer is
+	 * large enough to accommodate the extra character. Otherwise, the function
+	 * fails and returns ERROR_MORE_DATA.
+	 * @param pcbData A pointer to a variable that specifies the size of the
+	 * buffer pointed to by the pvData parameter, in bytes. When the function
+	 * returns, this variable contains the size of the data copied to pvData.
+	 * The pcbData parameter can be NULL only if pvData is NULL. If the data
+	 * has the REG_SZ, REG_MULTI_SZ or REG_EXPAND_SZ type, this size includes
+	 * any terminating null character or characters. For more information, see
+	 * Remarks. If the buffer specified by pvData parameter is not large enough
+	 * to hold the data, the function returns ERROR_MORE_DATA and stores the
+	 * required buffer size in the variable pointed to by pcbData. In this
+	 * case, the contents of the pvData buffer are undefined. If pvData is
+	 * NULL, and pcbData is non-NULL, the function returns ERROR_SUCCESS and
+	 * stores the size of the data, in bytes, in the variable pointed to by
+	 * pcbData. This enables an application to determine the best way to
+	 * allocate a buffer for the value's data. If hKey specifies
+	 * HKEY_PERFORMANCE_DATA and the pvData buffer is not large enough to
+	 * contain all of the returned data, the function returns ERROR_MORE_DATA
+	 * and the value returned through the pcbData parameter is undefined. This
+	 * is because the size of the performance data can change from one call to
+	 * the next. In this case, you must increase the buffer size and call
+	 * RegGetValue again passing the updated buffer size in the pcbData
+	 * parameter. Repeat this until the function succeeds. You need to maintain
+	 * a separate variable to keep track of the buffer size, because the value
+	 * returned by pcbData is unpredictable.
+	 * @return If the function succeeds, the return value is ERROR_SUCCESS. If
+	 * the function fails, the return value is a system error code. If the
+	 * pvData buffer is too small to receive the value, the function returns
+	 * ERROR_MORE_DATA.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724868(VS.85).aspx">RegGetValue Function (Windows)</a>
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>   
+	 */
+	NativeLong RegGetValueA(
+			int hkey,
+			String lpSubKey,
+			String lpValue,
+			int dwFlags,
+			IntByReference pdwType,
+			Pointer pvData,
+			IntByReference pcbData
 			);
 }
