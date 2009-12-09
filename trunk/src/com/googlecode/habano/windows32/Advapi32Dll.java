@@ -575,7 +575,7 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724902(VS.85).aspx">RegQueryInfoKey Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>
 	 */
-	NativeLong RegQueryInfoKey(
+	NativeLong RegQueryInfoKeyA(
 			int hKey,
 			String lpClass,
 			IntByReference lpcClass,
