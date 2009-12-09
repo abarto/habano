@@ -2,6 +2,7 @@ package com.googlecode.habano.windows32;
 
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
+import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
 /**
@@ -13,120 +14,8 @@ import com.sun.jna.win32.StdCallLibrary;
  *
  */
 public interface Advapi32Dll  extends StdCallLibrary {
-	/**
-	 * KEY_QUERY_VALUE (0x0001). Required to query the values of a registry key.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_QUERY_VALUE = 0x0001;
-
-	/**
-	 * KEY_SET_VALUE (0x0002). Required to create, delete, or set a registry
-	 * value.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_SET_VALUE = 0x0002;
-
-	/**
-	 * KEY_CREATE_SUB_KEY (0x0004). Required to create a subkey of a registry
-	 * key.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_CREATE_SUB_KEY = 0x0004;
-
-	/**
-	 * KEY_ENUMERATE_SUB_KEYS (0x0008). Required to enumerate the subkeys of a
-	 * registry key.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_ENUMERATE_SUB_KEYS = 0x0008;
-
-	/**
-	 * KEY_NOTIFY (0x0010). Required to request change notifications for a
-	 * registry key or for subkeys of a registry key.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_NOTIFY = 0x0010;
-
-	/**
-	 * KEY_CREATE_LINK (0x0020). Reserved for system use.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_CREATE_LINK = 0x0020;
-
-	/**
-	 * KEY_WRITE (0x20006). Combines the STANDARD_RIGHTS_WRITE, KEY_SET_VALUE,
-	 * and KEY_CREATE_SUB_KEY access rights.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_WRITE = 0x20006;
-
-	/**
-	 * KEY_EXECUTE (0x20019). Equivalent to KEY_READ.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_EXECUTE = 0x20019;
-
-	/**
-	 * KEY_READ (0x20019). Combines the STANDARD_RIGHTS_READ, KEY_QUERY_VALUE,
-	 * KEY_ENUMERATE_SUB_KEYS, and KEY_NOTIFY values.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_READ = 0x20019;
-
-	/**
-	 * KEY_WOW64_64KEY (0x0100). Indicates that an application on 64-bit
-	 * Windows should operate on the 64-bit registry view. For more
-	 * information, see <a href="http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx">Accessing an Alternate Registry View</a>.
-	 * This flag must be combined using the OR operator with the other flags in
-	 * this table that either query or access registry values. Windows 2000:
-	 * This flag is not supported.
-
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_WOW64_64KEY = 0x0100;
-
-	/**
-	 * KEY_WOW64_32KEY (0x0200). Indicates that an application on 64-bit
-	 * Windows should operate on the 32-bit registry view. For more
-	 * information, see <a href="http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx">Accessing an Alternate Registry View</a>.
-	 * This flag must be combined using the OR operator with the other flags in
-	 * this table that either query or access registry values. Windows 2000:
-	 * This flag is not supported.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_WOW64_32KEY = 0x0200;
-
-	/**
-	 * KEY_ALL_ACCESS (0xF003F). Combines the STANDARD_RIGHTS_REQUIRED,
-	 * KEY_QUERY_VALUE, KEY_SET_VALUE, KEY_CREATE_SUB_KEY,
-	 * KEY_ENUMERATE_SUB_KEYS, KEY_NOTIFY, and KEY_CREATE_LINK access rights.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
-	 */
-	public static final int KEY_ALL_ACCESS = 0xf003f;
+	// REGSAM values
+	
 	
 	/**
 	 * The actual object on which to make the method calls.
@@ -163,14 +52,20 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * key. The function fails if the security descriptor of the key does not
 	 * permit the requested access for the calling process. For more
 	 * information, see <a href="">Registry Key Security and Access Rights.</a>
-	 * @param phkResult
-	 * @return
+	 * @param phkResult A pointer to a variable that receives a handle to the
+	 * opened key. If the key is not one of the predefined registry keys, call
+	 * the RegCloseKey function after you have finished using the handle.
+	 * @return If the function succeeds, the return value is ERROR_SUCCESS. If
+	 * the function fails, the return value is a nonzero error code defined in
+	 * Winerror.h. You can use the FormatMessage function with the
+	 * FORMAT_MESSAGE_FROM_SYSTEM flag to get a generic description of the
+	 * error.
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724897(VS.85).aspx">RegOpenKeyEx Function (Windows)</a>
 	 */
-	NativeLong RegOpenKeyExA(HKEY hKey,
+	NativeLong RegOpenKeyExA(int hKey,
 			String lpSubKey,
 			int ulOptions,
 			int samDesired,
-			HKEY phkResult
+			IntByReference phkResult
 			);
 }

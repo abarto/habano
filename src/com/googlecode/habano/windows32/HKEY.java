@@ -1,113 +1,124 @@
 package com.googlecode.habano.windows32;
 
-import com.sun.jna.Structure;
 
 /**
  * 
- * A structure to represent a registry key handle.
- * 
- * <pre>
- * DECLARE_HANDLE(HKEY);
- * 
- * typedef struct HKEY__{int i;}*HKEY
- * </pre>
- *
- * @see <a href="http://msdn.microsoft.com/en-us/library/aa383751(VS.85).aspx">Windows Data Types (Windows)</a>
+ * A utility interface to hold predefined registry key definitions.
+
+ * @see @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
  * @author Agustin Barto <abarto@gmail.com>
  *
  */
-public class HKEY extends Structure {
+public interface HKEY {
 	/**
-	 * <p><code>#define HKEY_CLASSES_ROOT ((HKEY)0x80000000)</code></p>
+	 * HKEY_CLASSES_ROOT. Registry entries subordinate to this key define types
+	 * (or classes) of documents and the properties associated with those
+	 * types. Shell and COM applications use the information stored under this
+	 * key. This key also provides backward compatibility with the Windows 3.1
+	 * registration database by storing information for DDE and OLE support.
+	 * File viewers and user interface extensions store their OLE class
+	 * identifiers in HKEY_CLASSES_ROOT, and in-process servers are registered
+	 * in this key. This handle should not be used in a service or an
+	 * application that impersonates different users. For more information, see
+	 * <a href="http://msdn.microsoft.com/en-us/library/ms724475(VS.85).aspx">HKEY_CLASSES_ROOT</a>.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static final HKEY HKEY_CLASSES_ROOT = new HKEY(0x80000000);
+	static final int HKEY_CLASSES_ROOT = 0x80000000;
 
 	/**
-	 * <p><code>#define HKEY_CURRENT_USER ((HKEY)0x80000001)</code></p>
+	 * HKEY_CURRENT_CONFIG. Contains information about the current hardware
+	 * profile of the local computer system. The information under
+	 * HKEY_CURRENT_CONFIG describes only the differences between the current
+	 * hardware configuration and the standard configuration. Information about
+	 * the standard hardware configuration is stored under the Software and
+	 * System keys of HKEY_LOCAL_MACHINE. HKEY_CURRENT_CONFIG is an alias for
+	 * HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current.
+	 * For more information, see <a href="http://go.microsoft.com/fwlink/?LinkId=114992">HKEY_CURRENT_CONFIG</a>.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a> 
 	 */
-	public static final HKEY HKEY_CURRENT_USER = new HKEY(0x80000001);
+	static final int HKEY_CURRENT_CONFIG = 0x80000005;
 
 	/**
-	 * <p><code>#define HKEY_LOCAL_MACHINE ((HKEY)0x80000002)</code></p>
+	 * HKEY_CURRENT_USER. Registry entries subordinate to this key define the
+	 * preferences of the current user. These preferences include the settings
+	 * of environment variables, data about program groups, colors, printers,
+	 * network connections, and application preferences. This key makes it
+	 * easier to establish the current user's settings; the key maps to the
+	 * current user's branch in HKEY_USERS. In HKEY_CURRENT_USER, software
+	 * vendors store the current user-specific preferences to be used within
+	 * their applications. Microsoft, for example, creates the HKEY_CURRENT_USER\Software\Microsoft
+	 * key for its applications to use, with each application creating its own
+	 * subkey under the Microsoft key. The mapping between HKEY_CURRENT_USER
+	 * and HKEY_USERS is per process and is established the first time the
+	 * process references HKEY_CURRENT_USER. The mapping is based on the
+	 * security context of the first thread to reference HKEY_CURRENT_USER. If
+	 * this security context does not have a registry hive loaded in
+	 * HKEY_USERS, the mapping is established with HKEY_USERS\.Default. After
+	 * this mapping is established it persists, even if the security context of
+	 * the thread changes. This handle should not be used in a service or an
+	 * application that impersonates different users. Instead, call the
+	 * RegOpenCurrentUser function. For more information, see
+	 * <a href="http://go.microsoft.com/fwlink/?LinkId=114995">HKEY_CURRENT_USER</a>.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static final HKEY HKEY_LOCAL_MACHINE = new HKEY(0x80000002);
+	static final int HKEY_CURRENT_USER = 0x80000001;
 
 	/**
-	 * <p><code>#define HKEY_USERS ((HKEY)0x80000003)</code></p>
+	 * HKEY_LOCAL_MACHINE. Registry entries subordinate to this key define the
+	 * physical state of the computer, including data about the bus type,
+	 * system memory, and installed hardware and software. It contains subkeys
+	 * that hold current configuration data, including Plug and Play
+	 * information (the Enum branch, which includes a complete list of all
+	 * hardware that has ever been on the system), network logon preferences,
+	 * network security information, software-related information (such as
+	 * server names and the location of the server), and other system
+	 * information. For more information, see
+	 * <a href="http://go.microsoft.com/fwlink/?LinkId=114996">HKEY_LOCAL_MACHINE</a>.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static final HKEY HKEY_USERS = new HKEY(0x80000003);
+	static final int HKEY_LOCAL_MACHINE = 0x80000002;
 
 	/**
-	 * <p><code>#define HKEY_PERFORMANCE_DATA ((HKEY)0x80000004)</code></p>
+	 * HKEY_PERFORMANCE_DATA. Registry entries subordinate to this key allow
+	 * you to access performance data. The data is not actually stored in the
+	 * registry; the registry functions cause the system to collect the data
+	 * from its source.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static final HKEY HKEY_PERFORMANCE_DATA = new HKEY(0x80000004);
+	static final int HKEY_PERFORMANCE_DATA = 0x80000004;
 
 	/**
-	 * <p><code>#define HKEY_CURRENT_CONFIG ((HKEY)0x80000005)</code></p>
+	 * HKEY_PERFORMANCE_NLSTEXT. Registry entries subordinate to this key
+	 * reference the text strings that describe counters in the local language
+	 * of the area in which the computer system is running. These entries are
+	 * not available to Regedit.exe and Regedt32.exe. Windows 2000: This key is
+	 * not supported.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static final HKEY HKEY_CURRENT_CONFIG = new HKEY(0x80000005);
+	static final int HKEY_PERFORMANCE_NLSTEXT = 0x80000060;
 
 	/**
-	 * <p><code>#define HKEY_DYN_DATA ((HKEY)0x80000006)</code></p>
+	 * HKEY_PERFORMANCE_TEXT. Registry entries subordinate to this key
+	 * reference the text strings that describe counters in US English. These
+	 * entries are not available to Regedit.exe and Regedt32.exe. Windows 2000:
+	 * This key is not supported.
 	 * 
-	 * Predefined HKEY handle.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static final HKEY HKEY_DYN_DATA = new HKEY(0x80000006);
-	
-	/**
-	 * Tagged inner class to indicate the value of an instance of the Structure
-	 * type is to be used in function invocations rather than its address.
-	 * 
-	 * @see Structure.ByValue
-	 * @author Agustin Barto <abarto@gmail.com>
-	 *
-	 */
-	public static class ByValue extends HKEY implements Structure.ByValue {
-		public ByValue(int i) {
-			super(i);
-		}
-	}
+	static final int HKEY_PERFORMANCE_TEXT = 0x80000050;
 
 	/**
+	 * HKEY_USERS. Registry entries subordinate to this key define the default
+	 * user configuration for new users on the local computer and the user
+	 * configuration for the current user.
 	 * 
-	 * Tagged inner class to indicate the address of an instance of the
-	 * Structure type is to be used within a Structure definition rather than
-	 * nesting the full Structure contents.
-	 * 
-	 * @see Structure.ByReference
-	 * @author Agustin Barto <abarto@gmail.com>
-	 *
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	public static class ByReference extends HKEY implements Structure.ByReference {
-		public ByReference(int i) {
-			super(i);
-		}
-	}
-
-	/**
-	 * A registry key handle.
-	 */
-	public int i;
-
-	/**
-	 * Constructor.
-	 * 
-	 * @param i The registry key handle.
-	 */
-	public HKEY(int i) {
-		super();
-		this.i = i;
-	}
+	static final int HKEY_USERS = 0x80000003;
 }
