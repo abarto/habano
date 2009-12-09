@@ -500,4 +500,93 @@ public interface Advapi32Dll  extends StdCallLibrary {
 			Pointer pvData,
 			IntByReference pcbData
 			);
+	
+	/**
+	 * Retrieves information about the specified registry key.
+	 * 
+	 * <pre>
+	 * LONG WINAPI RegQueryInfoKey(
+	 *   __in         HKEY hKey,
+	 *   __out        LPTSTR lpClass,
+	 *   __inout_opt  LPDWORD lpcClass,
+	 *   __reserved   LPDWORD lpReserved,
+	 *   __out_opt    LPDWORD lpcSubKeys,
+	 *   __out_opt    LPDWORD lpcMaxSubKeyLen,
+	 *   __out_opt    LPDWORD lpcMaxClassLen,
+	 *   __out_opt    LPDWORD lpcValues,
+	 *   __out_opt    LPDWORD lpcMaxValueNameLen,
+	 *   __out_opt    LPDWORD lpcMaxValueLen,
+	 *   __out_opt    LPDWORD lpcbSecurityDescriptor,
+	 *   __out_opt    PFILETIME lpftLastWriteTime
+	 * );
+	 * </pre>
+	 * 
+	 * @param hKey A handle to an open registry key. The key must have been
+	 * opened with the KEY_QUERY_VALUE access right. For more information, see
+	 * <a href="http://msdn.microsoft.com/en-us/library/ms724902(VS.85).aspx">Registry Key Security and Access Rights</a>.
+	 * This handle is returned by the RegCreateKeyEx, RegCreateKeyTransacted,
+	 * RegOpenKeyEx, or RegOpenKeyTransacted function. It can also be one of
+	 * the following predefined keys: HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG,
+	 * HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA,
+	 * HKEY_USERS.
+	 * @param lpClass A pointer to a buffer that receives the user-defined
+	 * class of the key. This parameter can be NULL.
+	 * @param lpcClass A pointer to a variable that specifies the size of the
+	 * buffer pointed to by the lpClass parameter, in characters. The size
+	 * should include the terminating null character. When the function
+	 * returns, this variable contains the size of the class string that is
+	 * stored in the buffer. The count returned does not include the
+	 * terminating null character. If the buffer is not big enough, the
+	 * function returns ERROR_MORE_DATA, and the variable contains the size of
+	 * the string, in characters, without counting the terminating null
+	 * character. If lpClass is NULL, lpcClass can be NULL. If the lpClass
+	 * parameter is a valid address, but the lpcClass parameter is not, for
+	 * example, it is NULL, then the function returns ERROR_INVALID_PARAMETER.
+	 * @param lpReserved This parameter is reserved and must be NULL.
+	 * @param lpcSubKeys A pointer to a variable that receives the number of
+	 * subkeys that are contained by the specified key. This parameter can be
+	 * NULL.
+	 * @param lpcMaxSubKeyLen A pointer to a variable that receives the size of
+	 * the key's subkey with the longest name, in Unicode characters, not
+	 * including the terminating null character. This parameter can be NULL.
+	 * @param lpcMaxClassLen A pointer to a variable that receives the size of
+	 * the longest string that specifies a subkey class, in Unicode characters.
+	 * The count returned does not include the terminating null character. This
+	 * parameter can be NULL.
+	 * @param lpcValues A pointer to a variable that receives the number of
+	 * values that are associated with the key. This parameter can be NULL.
+	 * @param lpcMaxValueNameLen A pointer to a variable that receives the size
+	 * of the key's longest value name, in Unicode characters. The size does
+	 * not include the terminating null character. This parameter can be NULL.
+	 * @param lpcMaxValueLen A pointer to a variable that receives the size of
+	 * the longest data component among the key's values, in bytes. This
+	 * parameter can be NULL.
+	 * @param lpcbSecurityDescriptor A pointer to a variable that receives the
+	 * size of the key's security descriptor, in bytes. This parameter can be
+	 * NULL.
+	 * @param lpftLastWriteTime A pointer to a {@link FILETIME}structure that
+	 * receives the last write time. This parameter can be NULL. The function
+	 * sets the members of the {@link FILETIME} structure to indicate the last
+	 * time that the key or any of its value entries is modified.
+	 * @return If the function succeeds, the return value is ERROR_SUCCESS. If
+	 * the function fails, the return value is a system error code. If the
+	 * lpClass buffer is too small to receive the name of the class, the
+	 * function returns ERROR_MORE_DATA.
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724902(VS.85).aspx">RegQueryInfoKey Function (Windows)</a>
+	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>
+	 */
+	NativeLong RegQueryInfoKey(
+			int hKey,
+			String lpClass,
+			IntByReference lpcClass,
+			IntByReference lpReserved,
+			IntByReference lpcSubKeys,
+			IntByReference lpcMaxSubKeyLen,
+			IntByReference lpcMaxClassLen,
+			IntByReference lpcValues,
+			IntByReference lpcMaxValueNameLen,
+			IntByReference lpcMaxValueLen,
+			IntByReference lpcbSecurityDescriptor,
+			FILETIME lpftLastWriteTime
+			);
 }
