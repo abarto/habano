@@ -9,6 +9,7 @@ import com.googlecode.habano.windows32.MEMORYSTATUSEX;
 import com.googlecode.habano.windows32.SYSTEMTIME;
 import com.googlecode.habano.windows32.ULARGE_INTEGER;
 import com.sun.jna.Native;
+import com.sun.jna.WString;
 
 /**
  * 
@@ -81,8 +82,10 @@ class SystemInfoWindows32Impl extends SystemInfo {
 		
 		ULARGE_INTEGER lpTotalNumberOfFreeBytes = new ULARGE_INTEGER();
 		lpTotalNumberOfBytes.setType(Long.class); // select QuadPart
+
+		WString lpDirectoryName = new WString(path);
 		
-		Kernel32Dll.INSTANCE.GetDiskFreeSpaceExA(path, lpFreeBytesAvailable, lpTotalNumberOfBytes, lpTotalNumberOfFreeBytes);
+		Kernel32Dll.INSTANCE.GetDiskFreeSpaceExW(lpDirectoryName, lpFreeBytesAvailable, lpTotalNumberOfBytes, lpTotalNumberOfFreeBytes);
 		
 		FileSystemInfo fileSystemInfo = new FileSystemInfo();
 		fileSystemInfo.setPath(path);

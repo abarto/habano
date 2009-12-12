@@ -62,8 +62,8 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724897(VS.85).aspx">RegOpenKeyEx Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>
 	 */
-	NativeLong RegOpenKeyExA(int hKey,
-			String lpSubKey,
+	NativeLong RegOpenKeyExW(int hKey,
+			char[] lpSubKey,
 			int ulOptions,
 			int samDesired,
 			IntByReference phkResult
@@ -121,7 +121,7 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a> 
 	 */
 	NativeLong RegConnectRegistry(
-			String lpMachineName,
+			char[] lpMachineName,
 			int hKey,
 			IntByReference phkResult
 			);
@@ -189,13 +189,13 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724862(VS.85).aspx">RegEnumKeyEx Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>  
 	 */
-	NativeLong RegEnumKeyExA(
+	NativeLong RegEnumKeyExW(
 			int hKey,
 			int dwIndex,
-			String lpName,
+			char[] lpName,
 			IntByReference lpcName,
 			IntByReference lpReserved,
-			String lpClass,
+			char[] lpClass,
 			IntByReference lpcClass,
 			FILETIME lpftLastWriteTime
 			);	
@@ -273,11 +273,11 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	NativeLong RegEnumValue(
 			int hKey,
 			int dwIndex,
-			String lpValueName,
+			char[] lpValueName,
 			IntByReference lpcchValueName,
 			IntByReference lpReserved,
 			IntByReference lpType,
-			ByteByReference lpData,
+			byte[] lpData,
 			IntByReference lpcbData
 			);
 	
@@ -353,9 +353,9 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724911(VS.85).aspx">RegQueryValueEx Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>   
 	 */
-	NativeLong RegQueryValueExA(
+	NativeLong RegQueryValueExW(
 			int hKey,
-			String lpValueName,
+			char[] lpValueName,
 			IntByReference lpReserved,
 			IntByReference lpType,
 			ByteByReference lpData,
@@ -491,10 +491,10 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724868(VS.85).aspx">RegGetValue Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>   
 	 */
-	NativeLong RegGetValueA(
+	NativeLong RegGetValueW(
 			int hkey,
-			String lpSubKey,
-			String lpValue,
+			char[] lpSubKey,
+			char[] lpValue,
 			int dwFlags,
 			IntByReference pdwType,
 			Pointer pvData,
@@ -575,9 +575,9 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724902(VS.85).aspx">RegQueryInfoKey Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>
 	 */
-	NativeLong RegQueryInfoKeyA(
+	NativeLong RegQueryInfoKeyW(
 			int hKey,
-			String lpClass,
+			char[] lpClass,
 			IntByReference lpcClass,
 			IntByReference lpReserved,
 			IntByReference lpcSubKeys,

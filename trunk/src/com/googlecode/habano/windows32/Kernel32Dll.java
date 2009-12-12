@@ -1,6 +1,7 @@
 package com.googlecode.habano.windows32;
 
 import com.sun.jna.Native;
+import com.sun.jna.WString;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
@@ -95,7 +96,7 @@ public interface Kernel32Dll extends StdCallLibrary {
 	 * function fails, the return value is zero (0).
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa364937%28VS.85%29.aspx">GetDiskFreeSpaceEx Function (Windows)</a>
 	 */
-	boolean GetDiskFreeSpaceExA(String lpDirectoryName,
+	boolean GetDiskFreeSpaceExW(WString lpDirectoryName,
 			ULARGE_INTEGER lpFreeBytesAvailable,
 			ULARGE_INTEGER lpTotalNumberOfBytes,
 			ULARGE_INTEGER lpTotalNumberOfFreeBytes);
@@ -104,9 +105,9 @@ public interface Kernel32Dll extends StdCallLibrary {
 	 * An alternative way to reference GetDiskFreeSpaceEx using __int64
 	 * pointers.
 	 * 
-	 * @see #GetDiskFreeSpaceExA(String, ULARGE_INTEGER, ULARGE_INTEGER, ULARGE_INTEGER)
+	 * @see #GetDiskFreeSpaceExW(WString, ULARGE_INTEGER, ULARGE_INTEGER, ULARGE_INTEGER)
 	 */
-	boolean GetDiskFreeSpaceExA(String lpDirectoryName,
+	boolean GetDiskFreeSpaceExW(WString lpDirectoryName,
 			LongByReference lpFreeBytesAvailable,
 			LongByReference lpTotalNumberOfBytes,
 			LongByReference lpTotalNumberOfFreeBytes);
