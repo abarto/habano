@@ -270,7 +270,7 @@ public interface Advapi32Dll  extends StdCallLibrary {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724865(VS.85).aspx">RegEnumValue Function (Windows)</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/aa505945.aspx">Common Data Types</a>   
 	 */
-	NativeLong RegEnumValue(
+	NativeLong RegEnumValueW(
 			int hKey,
 			int dwIndex,
 			char[] lpValueName,
