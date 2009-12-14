@@ -358,7 +358,7 @@ public interface Advapi32Dll  extends StdCallLibrary {
 			char[] lpValueName,
 			IntByReference lpReserved,
 			IntByReference lpType,
-			ByteByReference lpData,
+			char[] lpData,
 			IntByReference lpcbData
 			);
 	
