@@ -15,6 +15,7 @@ import com.googlecode.habano.libc64.timeval_64;
 import com.googlecode.habano.libc64.tm_64;
 import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
+import com.googlecode.habano.systeminfo.beans.SystemArchitectureInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
 import com.googlecode.habano.util.ProcFsEntryHandler;
 import com.googlecode.habano.util.ProcFsProcessor;
@@ -156,5 +157,14 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 		CLibrary64.INSTANCE.statvfs(path, buf);
 		
 		return buf;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.googlecode.habano.systeminfo.SystemInfo#getSystemArchitectureInfo()
+	 */
+	@Override
+	public SystemArchitectureInfo getSystemArchitectureInfo() {
+		// TODO Implement getSystemArchitectureInfo for 64-bit Linux
+		return null;
 	}
 }

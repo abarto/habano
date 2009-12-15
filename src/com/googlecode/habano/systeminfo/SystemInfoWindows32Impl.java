@@ -2,14 +2,21 @@ package com.googlecode.habano.systeminfo;
 
 import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
+import com.googlecode.habano.systeminfo.beans.SystemArchitectureInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
+import com.googlecode.habano.windows32.Advapi32Dll;
 import com.googlecode.habano.windows32.FILETIME;
+import com.googlecode.habano.windows32.HKEY;
 import com.googlecode.habano.windows32.Kernel32Dll;
 import com.googlecode.habano.windows32.MEMORYSTATUSEX;
+import com.googlecode.habano.windows32.REGSAM;
 import com.googlecode.habano.windows32.SYSTEMTIME;
+import com.googlecode.habano.windows32.SYSTEM_INFO;
 import com.googlecode.habano.windows32.ULARGE_INTEGER;
 import com.sun.jna.Native;
+import com.sun.jna.NativeLong;
 import com.sun.jna.WString;
+import com.sun.jna.ptr.IntByReference;
 
 /**
  * 
@@ -21,6 +28,9 @@ import com.sun.jna.WString;
  * 
  */
 class SystemInfoWindows32Impl extends SystemInfo {
+
+	private static final NativeLong ERROR_SUCCESS = new NativeLong(0L);
+	
 	/* (non-Javadoc)
 	 * @see com.googlecode.habano.systeminfo.SystemInfo#getMemoryInfo()
 	 */
@@ -125,4 +135,72 @@ class SystemInfoWindows32Impl extends SystemInfo {
 		
 		return lpSystemTimeAsFileTime;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.googlecode.habano.systeminfo.SystemInfo#getSystemArchitectureInfo()
+	 */
+	@Override
+	public SystemArchitectureInfo getSystemArchitectureInfo() {
+		SystemArchitectureInfo systemArchitectureInfo = new SystemArchitectureInfo();
+		
+		SYSTEM_INFO lpSystemInfo = this.callGetSystenInfo();
+		
+		systemArchitectureInfo.setCores(lpSystemInfo.dwNumberOfProcessors);
+		systemArchitectureInfo.setX86_64(lpSystemInfo.unnamedUnion.unnamedStructure.wProcessorArchitecture == 9);
+		
+		char[] lpSubKey = Native.toCharArray("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0");
+		int ulOptions = 0;
+		int samDesired = REGSAM.KEY_READ;
+		IntByReference phkResult = new IntByReference();
+
+		NativeLong regOpenKeyExW = Advapi32Dll.INSTANCE.RegOpenKeyExW(
+				HKEY.HKEY_LOCAL_MACHINE,
+				lpSubKey,
+				ulOptions,
+				samDesired,
+				phkResult);
+		
+		if (ERROR_SUCCESS.equals(regOpenKeyExW)) {
+			char[] lpValueName = Native.toCharArray("VendorIdentifier");
+			IntByReference lpType = new IntByReference();
+			char[] lpData = new char[32768];
+			IntByReference lpcbData = new IntByReference(lpData.length);
+	
+			NativeLong regQueryValueExW = Advapi32Dll.INSTANCE.RegQueryValueExW(
+					phkResult.getValue(),
+					lpValueName,
+					null, // lpReserved
+					lpType,
+					lpData,
+					lpcbData);
+			
+			if (ERROR_SUCCESS.equals(regQueryValueExW)) {
+				String vendorIdentifier = Native.toString(lpData).trim();
+
+				systemArchitectureInfo.setVendorIdentifier(vendorIdentifier);
+			} else {
+				// TODO Handle error enumerating a registry key value 
+			}
+			
+			NativeLong regCloseKey = Advapi32Dll.INSTANCE.RegCloseKey(phkResult.getValue());
+			
+			if (!ERROR_SUCCESS.equals(regCloseKey)) {
+				// TODO Handle error closing a registry key handle
+			}
+		} else {
+			// TODO Handle error opening a registry key
+		}
+ 
+		return systemArchitectureInfo;
+	}
+	
+	private SYSTEM_INFO callGetSystenInfo() {
+		SYSTEM_INFO lpSystemInfo = new SYSTEM_INFO();
+		
+		lpSystemInfo.unnamedUnion.setType(SYSTEM_INFO.UnnamedUnion.UnnamedStructure.class);
+		
+		Kernel32Dll.INSTANCE.GetSystemInfo(lpSystemInfo);
+		
+		return lpSystemInfo;
+	}	
 }

@@ -2,6 +2,7 @@ package com.googlecode.habano.systeminfo;
 
 import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
+import com.googlecode.habano.systeminfo.beans.SystemArchitectureInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
 import com.sun.jna.Platform;
 
@@ -79,4 +80,13 @@ public abstract class SystemInfo {
 	 * filesystem accessed through the parameter.
 	 */
 	public abstract FileSystemInfo getFileSystemInfo(String path);
+	
+	/**
+	 * Retrieves information about the system architecture. This includes the
+	 * vendor of the processor, the number of cores, available extensions, etc.
+	 * 
+	 * @return {@link SystemArchitectureInfo} containing information about
+	 * the underlying system architecture.
+	 */
+	public abstract SystemArchitectureInfo getSystemArchitectureInfo();
 }
