@@ -3,8 +3,6 @@
  */
 package com.googlecode.habano.systeminfo;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +16,8 @@ import com.googlecode.habano.libc32.tm_32;
 import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
+import com.googlecode.habano.util.ProcFsEntryHandler;
+import com.googlecode.habano.util.ProcFsProcessor;
 import com.sun.jna.ptr.IntByReference;
 
 /**
@@ -31,6 +31,11 @@ import com.sun.jna.ptr.IntByReference;
  * 
  */
 public class SystemInfoLinux32Impl extends SystemInfo {
+	/**
+	 * /proc entries processor.
+	 */
+	private static final ProcFsProcessor procFsProcessor = new ProcFsProcessor();
+	
 	/**
 	 * A pattern to extract information from each line of /proc/meminfo
 	 */
@@ -116,8 +121,8 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	
 	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
 		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
-
-		this.readProcFs("/proc/meminfo", new ProcFsEntryHandler() {
+		
+		procFsProcessor.readProcFs("/proc/meminfo", new ProcFsEntryHandler() {
 			@Override
 			public void handleEntry(String entry) {
 				Matcher matcher = MEMINFO_PATTERN.matcher(entry);
@@ -130,34 +135,6 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return procFsMemInfo;
 	}
 	
-	private void readProcFs(String path, ProcFsEntryHandler procFsEntryHandler) throws IOException {
-		FileReader fileReader = null;
-		BufferedReader bufferedReader = null;
-		
-		try {
-			fileReader = new FileReader(path);
-			bufferedReader = new BufferedReader(fileReader);
-			
-			String line = null;
-			
-			while ((line = bufferedReader.readLine()) != null) {
-				procFsEntryHandler.handleEntry(line);
-			}
-		} finally {
-			if (bufferedReader != null) {
-				try {
-					bufferedReader.close();
-				} catch (IOException e) {
-					// Close quietly
-				}
-			}
-		}
-	}
-	
-	private interface ProcFsEntryHandler {
-		void handleEntry(String entry);
-	}
-
 	/* (non-Javadoc)
 	 * @see com.googlecode.habano.systeminfo.SystemInfo#getFileSystemInfo(java.lang.String)
 	 */
