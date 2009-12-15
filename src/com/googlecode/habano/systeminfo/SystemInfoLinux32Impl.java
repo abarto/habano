@@ -17,7 +17,7 @@ import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
 import com.googlecode.habano.systeminfo.beans.SystemArchitectureInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
-import com.googlecode.habano.util.ProcFsEntryHandler;
+import com.googlecode.habano.util.ProcFsLineHandler;
 import com.googlecode.habano.util.ProcFsProcessor;
 import com.sun.jna.ptr.IntByReference;
 
@@ -42,6 +42,21 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	 */
 	private static final Pattern MEMINFO_PATTERN = Pattern.compile("^(.*):\\s*(\\d+)\\s*(.*)$");
 	
+	/**
+	 * A pattern to extract information from /proc/cpuinfo
+	 */
+	private static final Pattern CPU_CORES_PATTERN = Pattern.compile("^cpu\\s+cores\\s+:\\s+(\\d+)$");	
+
+	/**
+	 * A pattern to extract information from /proc/cpuinfo
+	 */
+	private static final Pattern VENDOR_ID_PATTERN = Pattern.compile("^vendor_id\\s+:\\s+(\\w+)$");	
+
+	/**
+	 * A pattern to extract information from /proc/cpuinfo
+	 */
+	private static final Pattern LONG_MODE_FLAG_PATTERN = Pattern.compile("^flags\\s+:.*\\blm\\b?.*$");	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -123,14 +138,16 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
 		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
 		
-		procFsProcessor.readProcFs("/proc/meminfo", new ProcFsEntryHandler() {
+		procFsProcessor.readProcFs("/proc/meminfo", new ProcFsLineHandler() {
 			@Override
-			public void handleEntry(String entry) {
+			public Boolean processLine(String entry) {
 				Matcher matcher = MEMINFO_PATTERN.matcher(entry);
 				
 				if (matcher.matches()) {
 					procFsMemInfo.put(matcher.group(1), Long.valueOf(matcher.group(2)));
 				}
+				
+				return true;
 			}});
 		
 		return procFsMemInfo;
@@ -164,7 +181,46 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	 */
 	@Override
 	public SystemArchitectureInfo getSystemArchitectureInfo() {
-		// TODO Implement getSystemArchitectureInfo for 32-bit Linux
-		return null;
+		final SystemArchitectureInfo systemArchitectureInfo = new SystemArchitectureInfo();
+		
+		try {
+			procFsProcessor.readProcFs("/proc/cpuinfo", new ProcFsLineHandler() {
+				@Override
+				public Boolean processLine(String line) {
+					if (systemArchitectureInfo.getCores() == null) {
+						Matcher cpuCoresMatcher = CPU_CORES_PATTERN.matcher(line);
+						
+						if (cpuCoresMatcher.matches()) {
+							systemArchitectureInfo.setCores(Integer.valueOf(cpuCoresMatcher.group(1)));
+						}
+					}
+					
+					if (systemArchitectureInfo.getVendorIdentifier() == null) {
+						Matcher vendorIdMatcher = VENDOR_ID_PATTERN.matcher(line);
+						
+						if (vendorIdMatcher.matches()) {
+							systemArchitectureInfo.setVendorIdentifier(vendorIdMatcher.group(1));
+						}
+					}
+					
+					if (systemArchitectureInfo.isX86_64() == null) {
+						Matcher longModeFlagMatcher = LONG_MODE_FLAG_PATTERN.matcher(line);
+						
+						if (longModeFlagMatcher.matches()) {
+							systemArchitectureInfo.setX86_64(true);
+						}
+					}
+					
+					return (systemArchitectureInfo.getCores() == null)
+						|| (systemArchitectureInfo.getVendorIdentifier() == null)
+						|| (systemArchitectureInfo.isX86_64() == null);
+				}
+			});
+		} catch (IOException e) {
+			// TODO Handle /proc/cpuinfo access exception
+			e.printStackTrace();
+		}
+		
+		return systemArchitectureInfo;
 	}
 }
