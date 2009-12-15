@@ -17,7 +17,7 @@ import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
 import com.googlecode.habano.systeminfo.beans.SystemArchitectureInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
-import com.googlecode.habano.util.ProcFsEntryHandler;
+import com.googlecode.habano.util.ProcFsLineHandler;
 import com.googlecode.habano.util.ProcFsProcessor;
 import com.sun.jna.ptr.LongByReference;
 
@@ -123,14 +123,16 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
 		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
 
-		procFsProcessor.readProcFs("/proc/meminfo", new ProcFsEntryHandler() {
+		procFsProcessor.readProcFs("/proc/meminfo", new ProcFsLineHandler() {
 			@Override
-			public void handleEntry(String entry) {
+			public Boolean processLine(String entry) {
 				Matcher matcher = MEMINFO_PATTERN.matcher(entry);
 				
 				if (matcher.matches()) {
 					procFsMemInfo.put(matcher.group(1), Long.valueOf(matcher.group(2)));
 				}
+				
+				return true;
 			}});
 		
 		return procFsMemInfo;
