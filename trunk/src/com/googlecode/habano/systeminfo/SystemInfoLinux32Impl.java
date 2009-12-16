@@ -221,6 +221,14 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 			e.printStackTrace();
 		}
 		
+		if (systemArchitectureInfo.getCores() == null) {
+			systemArchitectureInfo.setCores(1);
+		}
+		
+		if (systemArchitectureInfo.isX86_64() == null) {
+			systemArchitectureInfo.setX86_64(false);
+		}
+		
 		return systemArchitectureInfo;
 	}
 }
