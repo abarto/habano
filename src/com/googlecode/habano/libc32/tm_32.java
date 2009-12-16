@@ -1,5 +1,6 @@
 package com.googlecode.habano.libc32;
 
+import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
 /**
@@ -8,7 +9,8 @@ import com.sun.jna.Structure;
  * time.
  * 
  * <pre>
- * struct tm {
+ * struct tm
+ * {
  *   int tm_sec;
  *   int tm_min;
  *   int tm_hour;
@@ -18,6 +20,13 @@ import com.sun.jna.Structure;
  *   int tm_wday;
  *   int tm_yday;
  *   int tm_isdst;
+ * #ifdef	__USE_BSD
+ *   long int tm_gmtoff;
+ *   __const char *tm_zone;
+ * #else
+ *   long int __tm_gmtoff;
+ *   __const char *__tm_zone;
+ * #endif
  * };
  * </pre>
  * 
@@ -115,4 +124,18 @@ public class tm_32 extends Structure {
 	 * available.
 	 */
 	public int tm_isdst;
+	
+	/**
+	 * <p><code>long int tm_gmtoff</code></p>
+	 * 
+	 * Seconds east of UTC.
+	 */
+	public NativeLong tm_gmtoff;
+	
+	/**
+	 * <p><code>__const char *__tm_zone</code></p>
+	 * 
+	 * Timezone abbreviation.
+	 */
+	public String tm_zone; 
 }
