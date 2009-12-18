@@ -28,7 +28,9 @@ public abstract class SystemInfo {
 
 		if (Platform.isWindows()) {
 			if (Platform.is64Bit()) {
-				// TODO Implement 64-bit Windows platform support
+				// There seems to be no problems calling the existing methods
+				// on an 64-bit Windows platform.
+				instance = new SystemInfoWindows32Impl();
 			} else {
 				instance = new SystemInfoWindows32Impl();
 			}
