@@ -22,18 +22,13 @@ import com.sun.jna.ptr.IntByReference;
  * 
  * An implementation of {@link SystemInfo} to be used when the JVM is running
  * on a 32-bit Windows platform. Most of the information is extracted calling
- * kernel32.dll and advapi32.dll functions that are accessed through
- * {@link Kernel32Dll} and {@link Advapi32Dll}. 
+ * kernel32.dll functions that are accessed through {@link Kernel32Dll}. 
  * 
  * @author Agustin Barto <abarto@gmail.com>
  * 
  */
 class SystemInfoWindows32Impl extends SystemInfo {
-	/**
-	 * An error code for a successful call to a Windows function.
-	 * 
-	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms681381%28VS.85%29.aspx">System Error Codes (Windows)</a>
-	 */
+
 	private static final NativeLong ERROR_SUCCESS = new NativeLong(0L);
 	
 	/* (non-Javadoc)
