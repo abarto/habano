@@ -9,14 +9,21 @@ package com.googlecode.habano.windows32;
  * @author Agustin Barto <abarto@gmail.com>
  *
  */
-public interface REGSAM {
+public final class REGSAM {
+	
+	/**
+	 * Instantiates a new rEGSAM.
+	 */
+	private REGSAM() {
+	}
+	
 	/**
 	 * KEY_QUERY_VALUE (0x0001). Required to query the values of a registry key.
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_QUERY_VALUE = 0x0001;
+	public static final int KEY_QUERY_VALUE = 0x0001;
 
 	/**
 	 * KEY_SET_VALUE (0x0002). Required to create, delete, or set a registry
@@ -25,7 +32,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_SET_VALUE = 0x0002;
+	public static final int KEY_SET_VALUE = 0x0002;
 
 	/**
 	 * KEY_CREATE_SUB_KEY (0x0004). Required to create a subkey of a registry
@@ -34,7 +41,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_CREATE_SUB_KEY = 0x0004;
+	public static final int KEY_CREATE_SUB_KEY = 0x0004;
 
 	/**
 	 * KEY_ENUMERATE_SUB_KEYS (0x0008). Required to enumerate the subkeys of a
@@ -43,7 +50,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_ENUMERATE_SUB_KEYS = 0x0008;
+	public static final int KEY_ENUMERATE_SUB_KEYS = 0x0008;
 
 	/**
 	 * KEY_NOTIFY (0x0010). Required to request change notifications for a
@@ -52,7 +59,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_NOTIFY = 0x0010;
+	public static final int KEY_NOTIFY = 0x0010;
 
 	/**
 	 * KEY_CREATE_LINK (0x0020). Reserved for system use.
@@ -60,7 +67,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_CREATE_LINK = 0x0020;
+	public static final int KEY_CREATE_LINK = 0x0020;
 
 	/**
 	 * KEY_WRITE (0x20006). Combines the STANDARD_RIGHTS_WRITE, KEY_SET_VALUE,
@@ -69,7 +76,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_WRITE = 0x20006;
+	public static final int KEY_WRITE = 0x20006;
 
 	/**
 	 * KEY_EXECUTE (0x20019). Equivalent to KEY_READ.
@@ -77,7 +84,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_EXECUTE = 0x20019;
+	public static final int KEY_EXECUTE = 0x20019;
 
 	/**
 	 * KEY_READ (0x20019). Combines the STANDARD_RIGHTS_READ, KEY_QUERY_VALUE,
@@ -86,7 +93,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_READ = 0x20019;
+	public static final int KEY_READ = 0x20019;
 
 	/**
 	 * KEY_WOW64_64KEY (0x0100). Indicates that an application on 64-bit
@@ -95,12 +102,11 @@ public interface REGSAM {
 	 * This flag must be combined using the OR operator with the other flags in
 	 * this table that either query or access registry values. Windows 2000:
 	 * This flag is not supported.
-
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_WOW64_64KEY = 0x0100;
+	public static final int KEY_WOW64_64KEY = 0x0100;
 
 	/**
 	 * KEY_WOW64_32KEY (0x0200). Indicates that an application on 64-bit
@@ -113,7 +119,7 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_WOW64_32KEY = 0x0200;
+	public static final int KEY_WOW64_32KEY = 0x0200;
 
 	/**
 	 * KEY_ALL_ACCESS (0xF003F). Combines the STANDARD_RIGHTS_REQUIRED,
@@ -123,5 +129,5 @@ public interface REGSAM {
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724878(VS.85).aspx">Registry Key Security and Access Rights</a>
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/bb773480(VS.85).aspx">REGSAM</a>
 	 */
-	static final int KEY_ALL_ACCESS = 0xf003f;
+	public static final int KEY_ALL_ACCESS = 0xf003f;
 }

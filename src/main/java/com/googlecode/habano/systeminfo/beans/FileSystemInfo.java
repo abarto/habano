@@ -19,12 +19,6 @@ public class FileSystemInfo {
 	private long freeSpace;
 	
 	/**
-	 * Instantiates a new file system info.
-	 */
-	public FileSystemInfo() {
-	}
-
-	/**
 	 * Property <code>path</code>. The path to the root of the filesystem. It
 	 * might be a mount point ("<code>/home</code>") in Linux/UNIX or a drive
 	 * name in Windows ("<code>C:\</code>").
@@ -40,7 +34,7 @@ public class FileSystemInfo {
 	 *
 	 * @param path the new path
 	 */
-	public void setPath(String path) {
+	public void setPath(final String path) {
 		this.path = path;
 	}
 
@@ -59,7 +53,7 @@ public class FileSystemInfo {
 	 *
 	 * @param size the new size
 	 */
-	public void setSize(long size) {
+	public void setSize(final long size) {
 		this.size = size;
 	}
 
@@ -78,7 +72,7 @@ public class FileSystemInfo {
 	 *
 	 * @param freeSpace the new free space
 	 */
-	public void setFreeSpace(long freeSpace) {
+	public void setFreeSpace(final long freeSpace) {
 		this.freeSpace = freeSpace;
 	}
 

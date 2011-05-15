@@ -15,15 +15,9 @@ public class SystemArchitectureInfo {
 	/** The vendor identifier. */
 	private String vendorIdentifier;
 	
-	/** The x86_64. */
-	private Boolean x86_64;
+	/** The x8664. */
+	private Boolean x8664;
 	
-	/**
-	 * Instantiates a new system architecture info.
-	 */
-	public SystemArchitectureInfo() {
-	}
-
 	/**
 	 * Property <code>vendorIdentifier</code>. The vendor identifier as it is
 	 * reported by the system.
@@ -39,7 +33,7 @@ public class SystemArchitectureInfo {
 	 *
 	 * @param vendorIdentifier the new vendor identifier
 	 */
-	public void setVendorIdentifier(String vendorIdentifier) {
+	public void setVendorIdentifier(final String vendorIdentifier) {
 		this.vendorIdentifier = vendorIdentifier;
 	}
 	
@@ -58,7 +52,7 @@ public class SystemArchitectureInfo {
 	 *
 	 * @param cores the new cores
 	 */
-	public void setCores(Integer cores) {
+	public void setCores(final Integer cores) {
 		this.cores = cores;
 	}
 
@@ -83,22 +77,22 @@ public class SystemArchitectureInfo {
 	}
 
 	/**
-	 * Property <code>x86_64</code>. Indicates if the system supports 64-bit
+	 * Property <code>x8664</code>. Indicates if the system supports 64-bit
 	 * extensions.
 	 *
 	 * @return the boolean
 	 */
-	public Boolean isX86_64() {
-		return x86_64;
+	public Boolean getX8664() {
+		return x8664;
 	}
 
 	/**
-	 * Setter for the <code>x86_64</code> property.
+	 * Setter for the <code>x8664</code> property.
 	 *
-	 * @param x86_64 the new x86_64
+	 * @param x8664 the new x8664
 	 */
-	public void setX86_64(Boolean x86_64) {
-		this.x86_64 = x86_64;
+	public void setX8664(final Boolean x8664) {
+		this.x8664 = x8664;
 	}
 
 	/* (non-Javadoc)
@@ -107,7 +101,7 @@ public class SystemArchitectureInfo {
 	@Override
 	public String toString() {
 		return "SystemArchitectureInfo [cores=" + cores + ", vendorIdentifier="
-				+ vendorIdentifier + ", x86_64=" + x86_64 + ", isAmd()="
+				+ vendorIdentifier + ", x8664=" + x8664 + ", isAmd()="
 				+ isAmd() + ", isIntel()=" + isIntel() + "]";
 	}
 }
