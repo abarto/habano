@@ -8,19 +8,27 @@ package com.googlecode.habano.systeminfo.beans;
  *
  */
 public class SystemArchitectureInfo {
+	
+	/** The cores. */
 	private Integer cores;
+	
+	/** The vendor identifier. */
 	private String vendorIdentifier;
+	
+	/** The x86_64. */
 	private Boolean x86_64;
 	
 	/**
-	 * Default no-arguments constructor.
+	 * Instantiates a new system architecture info.
 	 */
 	public SystemArchitectureInfo() {
 	}
 
 	/**
 	 * Property <code>vendorIdentifier</code>. The vendor identifier as it is
-	 * reported by the system. 
+	 * reported by the system.
+	 *
+	 * @return the vendor identifier
 	 */
 	public String getVendorIdentifier() {
 		return vendorIdentifier;
@@ -28,8 +36,8 @@ public class SystemArchitectureInfo {
 
 	/**
 	 * Setter for the <code>vendorIdentifier</code> property.
-	 * 
-	 * @param vendorIdentifier
+	 *
+	 * @param vendorIdentifier the new vendor identifier
 	 */
 	public void setVendorIdentifier(String vendorIdentifier) {
 		this.vendorIdentifier = vendorIdentifier;
@@ -37,7 +45,9 @@ public class SystemArchitectureInfo {
 	
 	/**
 	 * Property <code>cores</code>. The number of cores in the system. Notice
-	 * that this value might not reflect the actual number of cores present. 
+	 * that this value might not reflect the actual number of cores present.
+	 *
+	 * @return the cores
 	 */
 	public Integer getCores() {
 		return cores;
@@ -45,8 +55,8 @@ public class SystemArchitectureInfo {
 
 	/**
 	 * Setter for the <code>cores</code> property.
-	 * 
-	 * @param cores
+	 *
+	 * @param cores the new cores
 	 */
 	public void setCores(Integer cores) {
 		this.cores = cores;
@@ -54,7 +64,9 @@ public class SystemArchitectureInfo {
 
 	/**
 	 * Property <code>amd</code>. Indicates if the system processor was made by
-	 * AMD. 
+	 * AMD.
+	 *
+	 * @return the boolean
 	 */
 	public Boolean isAmd() {
 		return "AuthenticAMD".equalsIgnoreCase(vendorIdentifier);
@@ -62,7 +74,9 @@ public class SystemArchitectureInfo {
 
 	/**
 	 * Property <code>intel</code>. Indicates if the system processor was made
-	 * by Intel. 
+	 * by Intel.
+	 *
+	 * @return the boolean
 	 */
 	public Boolean isIntel() {
 		return "GenuineIntel".equalsIgnoreCase(vendorIdentifier);
@@ -71,6 +85,8 @@ public class SystemArchitectureInfo {
 	/**
 	 * Property <code>x86_64</code>. Indicates if the system supports 64-bit
 	 * extensions.
+	 *
+	 * @return the boolean
 	 */
 	public Boolean isX86_64() {
 		return x86_64;
@@ -78,8 +94,8 @@ public class SystemArchitectureInfo {
 
 	/**
 	 * Setter for the <code>x86_64</code> property.
-	 * 
-	 * @param x86_64
+	 *
+	 * @param x86_64 the new x86_64
 	 */
 	public void setX86_64(Boolean x86_64) {
 		this.x86_64 = x86_64;

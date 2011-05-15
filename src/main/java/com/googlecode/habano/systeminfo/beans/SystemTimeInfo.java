@@ -11,23 +11,41 @@ import java.util.Calendar;
  *
  */
 public class SystemTimeInfo {
+	
+	/** The year. */
 	private Integer year;
+	
+	/** The month. */
 	private Integer month;
+	
+	/** The day of month. */
 	private Integer dayOfMonth;
+	
+	/** The day of week. */
 	private Integer dayOfWeek;
+	
+	/** The hour. */
 	private Integer hour;
+	
+	/** The minute. */
 	private Integer minute;
+	
+	/** The second. */
 	private Integer second;
+	
+	/** The millisecond. */
 	private Integer millisecond;
 
 	/**
-	 * Default no-arguments constructor.
+	 * Instantiates a new system time info.
 	 */
 	public SystemTimeInfo() {
 	}
 
 	/**
-	 * Property <code>year</code>. Represents the year of the system date/time. 
+	 * Property <code>year</code>. Represents the year of the system date/time.
+	 *
+	 * @return the year
 	 */
 	public Integer getYear() {
 		return year;
@@ -35,8 +53,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>year</code> property.
-	 * 
-	 * @param year
+	 *
+	 * @param year the new year
 	 */
 	public void setYear(Integer year) {
 		this.year = year;
@@ -45,6 +63,8 @@ public class SystemTimeInfo {
 	/**
 	 * Property <code>month</code>. Represents the month of the system
 	 * date/time. The possible values for this field are those defined in
+	 *
+	 * @return the month
 	 * {@link Calendar#MONTH}.
 	 */
 	public Integer getMonth() {
@@ -53,8 +73,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>month</code> property.
-	 * 
-	 * @param month
+	 *
+	 * @param month the new month
 	 */
 	public void setMonth(Integer month) {
 		this.month = month;
@@ -63,6 +83,8 @@ public class SystemTimeInfo {
 	/**
 	 * Property <code>dayOfMonth</code>. Represents the day of the month
 	 * of the system date/time.
+	 *
+	 * @return the day of month
 	 */
 	public Integer getDayOfMonth() {
 		return dayOfMonth;
@@ -70,8 +92,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>dayOfMonth</code> property.
-	 * 
-	 * @param dayOfMonth
+	 *
+	 * @param dayOfMonth the new day of month
 	 */
 	public void setDayOfMonth(Integer dayOfMonth) {
 		this.dayOfMonth = dayOfMonth;
@@ -81,6 +103,8 @@ public class SystemTimeInfo {
 	 * Property <code>dayOfWekk</code>. Represents the day of the week of the
 	 * system date/time. The possible values for this field are those defined
 	 * in {@link Calendar#DAY_OF_WEEK}.
+	 *
+	 * @return the day of week
 	 */
 	public Integer getDayOfWeek() {
 		return dayOfWeek;
@@ -88,8 +112,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>dayOfWeek</code> property.
-	 * 
-	 * @param dayOfWeek
+	 *
+	 * @param dayOfWeek the new day of week
 	 */
 	public void setDayOfWeek(Integer dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
@@ -98,7 +122,9 @@ public class SystemTimeInfo {
 	/**
 	 * Property <code>hour</code>. Represents the hour of the system date/time.
 	 * The possible values for this field are those defined in
-	 * {@link Calendar#HOUR_OF_DAY}. 
+	 *
+	 * @return the hour
+	 * {@link Calendar#HOUR_OF_DAY}.
 	 */
 	public Integer getHour() {
 		return hour;
@@ -106,8 +132,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>hour</code> property.
-	 * 
-	 * @param hour
+	 *
+	 * @param hour the new hour
 	 */
 	public void setHour(Integer hour) {
 		this.hour = hour;
@@ -115,7 +141,9 @@ public class SystemTimeInfo {
 
 	/**
 	 * Property <code>minute</code>. Represents the minutes of the system
-	 * date/time. 
+	 * date/time.
+	 *
+	 * @return the minute
 	 */
 	public Integer getMinute() {
 		return minute;
@@ -123,8 +151,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>minute</code> property.
-	 * 
-	 * @param minute
+	 *
+	 * @param minute the new minute
 	 */
 	public void setMinute(Integer minute) {
 		this.minute = minute;
@@ -132,7 +160,9 @@ public class SystemTimeInfo {
 
 	/**
 	 * Property <code>second</code>. Represents the seconds of the system
-	 * date/time. 
+	 * date/time.
+	 *
+	 * @return the second
 	 */
 	public Integer getSecond() {
 		return second;
@@ -140,8 +170,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>minute</code> property.
-	 * 
-	 * @param second
+	 *
+	 * @param second the new second
 	 */
 	public void setSecond(Integer second) {
 		this.second = second;
@@ -149,7 +179,9 @@ public class SystemTimeInfo {
 
 	/**
 	 * Property <code>millisecond</code>. Represents the milliseconds of the
-	 * system date/time. 
+	 * system date/time.
+	 *
+	 * @return the millisecond
 	 */
 	public Integer getMillisecond() {
 		return millisecond;
@@ -157,8 +189,8 @@ public class SystemTimeInfo {
 
 	/**
 	 * Setter for the <code>millisecond</code> property.
-	 * 
-	 * @param millisecond
+	 *
+	 * @param millisecond the new millisecond
 	 */
 	public void setMillisecond(Integer millisecond) {
 		this.millisecond = millisecond;

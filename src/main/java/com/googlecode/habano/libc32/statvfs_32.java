@@ -64,90 +64,42 @@ public class statvfs_32 extends Structure {
 	 */
 	public static class ByReference extends statvfs_32 implements Structure.ByReference { }
 	
-	/**
-	 * <p><code>unsigned long f_bsize</code></p>
-	 * 
-	 * file system block size
-	 */
+	/** <p><code>unsigned long f_bsize</code></p>  file system block size. */
 	public NativeLong f_bsize;
 
-	/**
-	 * <p><code>unsigned long f_frsize</code></p>
-	 * 
-	 * fragment size
-	 */
+	/** <p><code>unsigned long f_frsize</code></p>  fragment size. */
 	public NativeLong f_frsize;
 
-	/**
-	 * <p><code>fsblkcnt_t f_blocks</code></p>
-	 * 
-	 * size of fs in f_frsize units
-	 */
+	/** <p><code>fsblkcnt_t f_blocks</code></p>  size of fs in f_frsize units. */
 	public NativeLong f_blocks;
 
-	/**
-	 * <p><code>fsblkcnt_t f_bfree</code></p>
-	 * 
-	 * # free blocks
-	 */
+	/** <p><code>fsblkcnt_t f_bfree</code></p>  # free blocks. */
 	public NativeLong f_bfree;
 
-	/**
-	 * <p><code>fsblkcnt_t f_bavail</code></p>
-	 * 
-	 * # free blocks for non-root
-	 */
+	/** <p><code>fsblkcnt_t f_bavail</code></p>  # free blocks for non-root. */
 	public NativeLong f_bavail;
 
-	/**
-	 * <p><code>fsfilcnt_t f_files</code></p>
-	 * 
-	 * # inodes
-	 */
+	/** <p><code>fsfilcnt_t f_files</code></p>  # inodes. */
 	public NativeLong f_files;
 
-	/**
-	 * <p><code>fsfilcnt_t f_ffree</code></p>
-	 * 
-	 * # free inodes
-	 */
+	/** <p><code>fsfilcnt_t f_ffree</code></p>  # free inodes. */
 	public NativeLong f_ffree;
 
-	/**
-	 * <p><code>fsfilcnt_t f_favail</code></p>
-	 * 
-	 * # free inodes for non-root
-	 */
+	/** <p><code>fsfilcnt_t f_favail</code></p>  # free inodes for non-root. */
 	public NativeLong f_favail;
 
-	/**
-	 * <p><code>unsigned long f_fsidl</code></p>
-	 * 
-	 * file system ID 
-	 */
+	/** <p><code>unsigned long f_fsidl</code></p>  file system ID. */
 	public NativeLong f_fsid;
 
-	/**
-	 * <p><code>unsigned long f_flag</code></p>
-	 * 
-	 * mount flags
-	 */
+	/** <p><code>unsigned long f_flag</code></p>  mount flags. */
 	public NativeLong f_flag;
 	
-	/**
-	 * <p><code>__f_unused</code></p>
-	 */
+	/** <p><code>__f_unused</code></p>. */
 	public int __f_unused;
 
-	/**
-	 * <p><code>unsigned long f_namemax</code></p>
-	 * 
-	 * maximum filename length
-	 */
+	/** <p><code>unsigned long f_namemax</code></p>  maximum filename length. */
 	public NativeLong f_namemax;
 	
-	/**
-	 * <p><code>int __f_spare[6]</code></p>
-	 */
+	/** <p><code>int __f_spare[6]</code></p>. */
 	public int[] __f_spare = new int[6];
 }

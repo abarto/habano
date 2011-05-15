@@ -42,17 +42,9 @@ public class timeval_64 extends Structure {
 	 */
 	public static class ByReference extends timeval_64 implements Structure.ByReference { }
 	
-	/**
-	 * <p><code>time_t tv_sec</code></p>
-	 * 
-	 * seconds
-	 */
+	/** <p><code>time_t tv_sec</code></p>  seconds. */
 	public long tv_sec;
 	
-	/**
-	 * <p><code>suseconds_t tv_usec</code></p>
-	 * 
-	 * microseconds
-	 */
+	/** <p><code>suseconds_t tv_usec</code></p>  microseconds. */
 	public long tv_usec;
 }

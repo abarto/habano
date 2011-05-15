@@ -37,24 +37,16 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 	 */
 	private static final ProcFsProcessor procFsProcessor = new ProcFsProcessor();
 	
-	/**
-	 * A pattern to extract information from each line of /proc/meminfo
-	 */
+	/** A pattern to extract information from each line of /proc/meminfo. */
 	private static final Pattern MEMINFO_PATTERN = Pattern.compile("^(.*):\\s*(\\d+)\\s*(.*)$");
 	
-	/**
-	 * A pattern to extract information from /proc/cpuinfo
-	 */
+	/** A pattern to extract information from /proc/cpuinfo. */
 	private static final Pattern CPU_CORES_PATTERN = Pattern.compile("^cpu\\s+cores\\s+:\\s+(\\d+)$");	
 
-	/**
-	 * A pattern to extract information from /proc/cpuinfo
-	 */
+	/** A pattern to extract information from /proc/cpuinfo. */
 	private static final Pattern VENDOR_ID_PATTERN = Pattern.compile("^vendor_id\\s+:\\s+(\\w+)$");	
 
-	/**
-	 * A pattern to extract information from /proc/cpuinfo
-	 */
+	/** A pattern to extract information from /proc/cpuinfo. */
 	private static final Pattern LONG_MODE_FLAG_PATTERN = Pattern.compile("^flags\\s+:.*\\blm\\b?.*$");	
 
 	/*
@@ -93,6 +85,11 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return tv.tv_sec * 1000L + tv.tv_usec / 1000L;
 	}
 
+	/**
+	 * Call get time of day.
+	 *
+	 * @return the timeval_32
+	 */
 	private timeval_32 callGetTimeOfDay() {
 		timeval_32 tv = new timeval_32();
 
@@ -127,6 +124,12 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return systemTimeInfo;
 	}
 
+	/**
+	 * Call get localtime_r.
+	 *
+	 * @param timep the timep
+	 * @return the tm_32
+	 */
 	private tm_32 callGetLocaltime_r(IntByReference timep) {
 		tm_32 resultp = new tm_32();
 		
@@ -135,6 +138,13 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return resultp;
 	} 
 	
+	/**
+	 * Read proc fs mem info.
+	 *
+	 * @return the map
+	 * @throws NumberFormatException the number format exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
 		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
 		
@@ -168,6 +178,12 @@ public class SystemInfoLinux32Impl extends SystemInfo {
 		return fileSystemInfo;
 	}
 	
+	/**
+	 * Call statvfs.
+	 *
+	 * @param path the path
+	 * @return the statvfs_32
+	 */
 	private statvfs_32 callStatvfs(String path) {
 		statvfs_32 buf = new statvfs_32();
 		

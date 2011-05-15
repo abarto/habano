@@ -12,14 +12,15 @@ import java.io.IOException;
  * 
  */
 public class ProcFsProcessor {
+	
 	/**
 	 * Process an entry in a mounted proc fs using the supplied handler. Each
 	 * line read from the path is going to be fed to the handler which in its
 	 * turn will return if the processing should continue or not.
-	 * 
+	 *
 	 * @param path The path to process
 	 * @param procFsLineHandler The object that will process each line of the entry.
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void readProcFs(String path, ProcFsLineHandler procFsLineHandler)
 			throws IOException {

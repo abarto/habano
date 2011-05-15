@@ -63,85 +63,39 @@ public class statvfs_64 extends Structure {
 	 */
 	public static class ByReference extends statvfs_64 implements Structure.ByReference { }
 	
-	/**
-	 * <p><code>unsigned long f_bsize</code></p>
-	 * 
-	 * file system block size
-	 */
+	/** <p><code>unsigned long f_bsize</code></p>  file system block size. */
 	public long f_bsize;
 
-	/**
-	 * <p><code>unsigned long f_frsize</code></p>
-	 * 
-	 * fragment size
-	 */
+	/** <p><code>unsigned long f_frsize</code></p>  fragment size. */
 	public long f_frsize;
 
-	/**
-	 * <p><code>fsblkcnt_t f_blocks</code></p>
-	 * 
-	 * size of fs in f_frsize units
-	 */
+	/** <p><code>fsblkcnt_t f_blocks</code></p>  size of fs in f_frsize units. */
 	public long f_blocks;
 
-	/**
-	 * <p><code>fsblkcnt_t f_bfree</code></p>
-	 * 
-	 * # free blocks
-	 */
+	/** <p><code>fsblkcnt_t f_bfree</code></p>  # free blocks. */
 	public long f_bfree;
 
-	/**
-	 * <p><code>fsblkcnt_t f_bavail</code></p>
-	 * 
-	 * # free blocks for non-root
-	 */
+	/** <p><code>fsblkcnt_t f_bavail</code></p>  # free blocks for non-root. */
 	public long f_bavail;
 
-	/**
-	 * <p><code>fsfilcnt_t f_files</code></p>
-	 * 
-	 * # inodes
-	 */
+	/** <p><code>fsfilcnt_t f_files</code></p>  # inodes. */
 	public long f_files;
 
-	/**
-	 * <p><code>fsfilcnt_t f_ffree</code></p>
-	 * 
-	 * # free inodes
-	 */
+	/** <p><code>fsfilcnt_t f_ffree</code></p>  # free inodes. */
 	public long f_ffree;
 
-	/**
-	 * <p><code>fsfilcnt_t f_favail</code></p>
-	 * 
-	 * # free inodes for non-root
-	 */
+	/** <p><code>fsfilcnt_t f_favail</code></p>  # free inodes for non-root. */
 	public long f_favail;
 
-	/**
-	 * <p><code>unsigned long f_fsidl</code></p>
-	 * 
-	 * file system ID 
-	 */
+	/** <p><code>unsigned long f_fsidl</code></p>  file system ID. */
 	public long f_fsid;
 
-	/**
-	 * <p><code>unsigned long f_flag</code></p>
-	 * 
-	 * mount flags
-	 */
+	/** <p><code>unsigned long f_flag</code></p>  mount flags. */
 	public long f_flag;
 	
-	/**
-	 * <p><code>unsigned long f_namemax</code></p>
-	 * 
-	 * maximum filename length
-	 */
+	/** <p><code>unsigned long f_namemax</code></p>  maximum filename length. */
 	public long f_namemax;
 	
-	/**
-	 * <p><code>int __f_spare[6]</code></p>
-	 */
+	/** <p><code>int __f_spare[6]</code></p>. */
 	public int[] __f_spare = new int[6];
 }

@@ -8,20 +8,30 @@ package com.googlecode.habano.systeminfo.beans;
  *
  */
 public class MemoryInfo {
+	
+	/** The total system memory. */
 	private Long totalSystemMemory;
+	
+	/** The total virtual memory. */
 	private Long totalVirtualMemory;
+	
+	/** The available system memory. */
 	private Long availableSystemMemory;
+	
+	/** The available virtual memory. */
 	private Long availableVirtualMemory;
 
 	/**
-	 * Default no-arguments constructor.
+	 * Instantiates a new memory info.
 	 */
 	public MemoryInfo() {
 	}
 
 	/**
 	 * Property <code>totalSystemMemory</code>. The total physical memory of
-	 * the system in bytes. 
+	 * the system in bytes.
+	 *
+	 * @return the total system memory
 	 */
 	public Long getTotalSystemMemory() {
 		return totalSystemMemory;
@@ -29,8 +39,8 @@ public class MemoryInfo {
 
 	/**
 	 * Setter for the <code>totalSystemMemory</code> property.
-	 * 
-	 * @param totalSystemMemory
+	 *
+	 * @param totalSystemMemory the new total system memory
 	 */
 	public void setTotalSystemMemory(Long totalSystemMemory) {
 		this.totalSystemMemory = totalSystemMemory;
@@ -38,7 +48,9 @@ public class MemoryInfo {
 
 	/**
 	 * Property <code>totalVirtualMemory</code>. The total virtual memory
-	 * (swap) of the system in bytes. 
+	 * (swap) of the system in bytes.
+	 *
+	 * @return the total virtual memory
 	 */
 	public Long getTotalVirtualMemory() {
 		return totalVirtualMemory;
@@ -46,8 +58,8 @@ public class MemoryInfo {
 
 	/**
 	 * Setter for the <code>totalVirtualMemory</code> property.
-	 * 
-	 * @param totalVirtualMemory
+	 *
+	 * @param totalVirtualMemory the new total virtual memory
 	 */
 	public void setTotalVirtualMemory(Long totalVirtualMemory) {
 		this.totalVirtualMemory = totalVirtualMemory;
@@ -55,7 +67,9 @@ public class MemoryInfo {
 
 	/**
 	 * Property <code>availableSystemMemory</code>. The free physical memory
-	 * of the system in bytes. 
+	 * of the system in bytes.
+	 *
+	 * @return the available system memory
 	 */
 	public Long getAvailableSystemMemory() {
 		return availableSystemMemory;
@@ -63,8 +77,8 @@ public class MemoryInfo {
 
 	/**
 	 * Setter for the <code>availableSystemMemory</code> property.
-	 * 
-	 * @param availableSystemMemory
+	 *
+	 * @param availableSystemMemory the new available system memory
 	 */
 	public void setAvailableSystemMemory(Long availableSystemMemory) {
 		this.availableSystemMemory = availableSystemMemory;
@@ -72,7 +86,9 @@ public class MemoryInfo {
 
 	/**
 	 * Property <code>availableVirtualMemory</code>. The free virtual memory
-	 * (swap) of the system in bytes. 
+	 * (swap) of the system in bytes.
+	 *
+	 * @return the available virtual memory
 	 */
 	public Long getAvailableVirtualMemory() {
 		return availableVirtualMemory;
@@ -80,8 +96,8 @@ public class MemoryInfo {
 
 	/**
 	 * Setter for the <code>availableVirtualMemory</code> property.
-	 * 
-	 * @param availableVirtualMemory
+	 *
+	 * @param availableVirtualMemory the new available virtual memory
 	 */
 	public void setAvailableVirtualMemory(Long availableVirtualMemory) {
 		this.availableVirtualMemory = availableVirtualMemory;
