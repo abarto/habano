@@ -35,7 +35,7 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	/**
 	 * /proc entries processor.
 	 */
-	private static final ProcFsProcessor procFsProcessor = new ProcFsProcessor();
+	private static final ProcFsProcessor PROC_FS_PROCESSOR = new ProcFsProcessor();
 
 	/** A pattern to extract information from each line of /proc/meminfo. */
 	private static final Pattern MEMINFO_PATTERN = Pattern.compile("^(.*):\\s*(\\d+)\\s*(.*)$");
@@ -56,10 +56,10 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 */
 	@Override
 	public MemoryInfo getMemoryInfo() {
-		MemoryInfo memoryInfo = new MemoryInfo();
+		final MemoryInfo memoryInfo = new MemoryInfo();
 		
 		try {
-			Map<String, Long> memInfo = this.readProcFsMemInfo();
+			final Map<String, Long> memInfo = this.readProcFsMemInfo();
 			
 			memoryInfo.setTotalSystemMemory(memInfo.get("MemTotal") * 1000L);
 			memoryInfo.setAvailableSystemMemory(memInfo.get("MemFree") * 1000L);
@@ -80,7 +80,7 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 */
 	@Override
 	public long getSystemTimeInMillis() {
-		timeval_64 tv = this.callGetTimeOfDay();
+		final timeval_64 tv = this.callGetTimeOfDay();
 
 		return tv.tv_sec * 1000L + tv.tv_usec / 1000L;
 	}
@@ -91,7 +91,7 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 * @return the timeval_64
 	 */
 	private timeval_64 callGetTimeOfDay() {
-		timeval_64 tv = new timeval_64();
+		final timeval_64 tv = new timeval_64();
 
 		// According to the manpage the timezone structure is obsolete and it
 		// should always be NULL;
@@ -107,10 +107,10 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 */
 	@Override
 	public SystemTimeInfo getSystemTimeInfo() {
-		SystemTimeInfo systemTimeInfo = new SystemTimeInfo();
+		final SystemTimeInfo systemTimeInfo = new SystemTimeInfo();
 		
-		timeval_64 tv = this.callGetTimeOfDay();
-		tm_64 result = this.callGetLocaltime_r(new LongByReference(tv.tv_sec));
+		final timeval_64 tv = this.callGetTimeOfDay();
+		final tm_64 result = this.callGetLocaltime_r(new LongByReference(tv.tv_sec));
 		
 		systemTimeInfo.setDayOfMonth(result.tm_mday);
 		systemTimeInfo.setDayOfWeek(result.tm_wday);
@@ -130,8 +130,8 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 * @param timep the timep
 	 * @return the tm_64
 	 */
-	private tm_64 callGetLocaltime_r(LongByReference timep) {
-		tm_64 resultp = new tm_64();
+	private tm_64 callGetLocaltime_r(final LongByReference timep) {
+		final tm_64 resultp = new tm_64();
 		
 		CLibrary64.INSTANCE.localtime_r(timep, resultp);
 		
@@ -148,10 +148,10 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
 		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
 
-		procFsProcessor.readProcFs("/proc/meminfo", new ProcFsLineHandler() {
+		PROC_FS_PROCESSOR.readProcFs("/proc/meminfo", new ProcFsLineHandler() {
 			@Override
-			public Boolean processLine(String entry) {
-				Matcher matcher = MEMINFO_PATTERN.matcher(entry);
+			public Boolean processLine(final String entry) {
+				final Matcher matcher = MEMINFO_PATTERN.matcher(entry);
 				
 				if (matcher.matches()) {
 					procFsMemInfo.put(matcher.group(1), Long.valueOf(matcher.group(2)));
@@ -167,10 +167,10 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 * @see com.googlecode.habano.systeminfo.SystemInfo#getFileSystemInfo(java.lang.String)
 	 */
 	@Override
-	public FileSystemInfo getFileSystemInfo(String path) {
-		statvfs_64 buf = this.callStatvfs(path);
+	public FileSystemInfo getFileSystemInfo(final String path) {
+		final statvfs_64 buf = this.callStatvfs(path);
 		
-		FileSystemInfo fileSystemInfo = new FileSystemInfo();
+		final FileSystemInfo fileSystemInfo = new FileSystemInfo();
 		fileSystemInfo.setPath(path);
 		fileSystemInfo.setSize(buf.f_blocks * buf.f_frsize);
 		fileSystemInfo.setFreeSpace(buf.f_bavail * buf.f_frsize);
@@ -184,8 +184,8 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 * @param path the path
 	 * @return the statvfs_64
 	 */
-	private statvfs_64 callStatvfs(String path) {
-		statvfs_64 buf = new statvfs_64();
+	private statvfs_64 callStatvfs(final String path) {
+		final statvfs_64 buf = new statvfs_64();
 		
 		CLibrary64.INSTANCE.statvfs(path, buf);
 		
@@ -200,11 +200,11 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 		final SystemArchitectureInfo systemArchitectureInfo = new SystemArchitectureInfo();
 		
 		try {
-			procFsProcessor.readProcFs("/proc/cpuinfo", new ProcFsLineHandler() {
+			PROC_FS_PROCESSOR.readProcFs("/proc/cpuinfo", new ProcFsLineHandler() {
 				@Override
-				public Boolean processLine(String line) {
+				public Boolean processLine(final String line) {
 					if (systemArchitectureInfo.getCores() == null) {
-						Matcher cpuCoresMatcher = CPU_CORES_PATTERN.matcher(line);
+						final Matcher cpuCoresMatcher = CPU_CORES_PATTERN.matcher(line);
 						
 						if (cpuCoresMatcher.matches()) {
 							systemArchitectureInfo.setCores(Integer.valueOf(cpuCoresMatcher.group(1)));
@@ -212,24 +212,24 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 					}
 					
 					if (systemArchitectureInfo.getVendorIdentifier() == null) {
-						Matcher vendorIdMatcher = VENDOR_ID_PATTERN.matcher(line);
+						final Matcher vendorIdMatcher = VENDOR_ID_PATTERN.matcher(line);
 						
 						if (vendorIdMatcher.matches()) {
 							systemArchitectureInfo.setVendorIdentifier(vendorIdMatcher.group(1));
 						}
 					}
 					
-					if (systemArchitectureInfo.isX86_64() == null) {
-						Matcher longModeFlagMatcher = LONG_MODE_FLAG_PATTERN.matcher(line);
+					if (systemArchitectureInfo.getX8664() == null) {
+						final Matcher longModeFlagMatcher = LONG_MODE_FLAG_PATTERN.matcher(line);
 						
 						if (longModeFlagMatcher.matches()) {
-							systemArchitectureInfo.setX86_64(true);
+							systemArchitectureInfo.setX8664(true);
 						}
 					}
 					
 					return (systemArchitectureInfo.getCores() == null)
 						|| (systemArchitectureInfo.getVendorIdentifier() == null)
-						|| (systemArchitectureInfo.isX86_64() == null);
+						|| (systemArchitectureInfo.getX8664() == null);
 				}
 			});
 		} catch (IOException e) {
@@ -241,8 +241,8 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 			systemArchitectureInfo.setCores(1);
 		}
 		
-		if (systemArchitectureInfo.isX86_64() == null) {
-			systemArchitectureInfo.setX86_64(false);
+		if (systemArchitectureInfo.getX8664() == null) {
+			systemArchitectureInfo.setX8664(false);
 		}
 		
 		return systemArchitectureInfo;

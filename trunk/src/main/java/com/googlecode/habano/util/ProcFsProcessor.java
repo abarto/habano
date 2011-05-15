@@ -22,7 +22,7 @@ public class ProcFsProcessor {
 	 * @param procFsLineHandler The object that will process each line of the entry.
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public void readProcFs(String path, ProcFsLineHandler procFsLineHandler)
+	public void readProcFs(final String path, final ProcFsLineHandler procFsLineHandler)
 			throws IOException {
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
@@ -33,7 +33,7 @@ public class ProcFsProcessor {
 
 			for (String line = null; (line = bufferedReader.readLine()) != null
 					&& procFsLineHandler.processLine(line);)
-				;
+			{}
 		} finally {
 			if (bufferedReader != null) {
 				try {

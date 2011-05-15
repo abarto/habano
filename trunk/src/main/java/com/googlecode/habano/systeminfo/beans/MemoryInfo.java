@@ -22,12 +22,6 @@ public class MemoryInfo {
 	private Long availableVirtualMemory;
 
 	/**
-	 * Instantiates a new memory info.
-	 */
-	public MemoryInfo() {
-	}
-
-	/**
 	 * Property <code>totalSystemMemory</code>. The total physical memory of
 	 * the system in bytes.
 	 *
@@ -42,7 +36,7 @@ public class MemoryInfo {
 	 *
 	 * @param totalSystemMemory the new total system memory
 	 */
-	public void setTotalSystemMemory(Long totalSystemMemory) {
+	public void setTotalSystemMemory(final Long totalSystemMemory) {
 		this.totalSystemMemory = totalSystemMemory;
 	}
 
@@ -61,7 +55,7 @@ public class MemoryInfo {
 	 *
 	 * @param totalVirtualMemory the new total virtual memory
 	 */
-	public void setTotalVirtualMemory(Long totalVirtualMemory) {
+	public void setTotalVirtualMemory(final Long totalVirtualMemory) {
 		this.totalVirtualMemory = totalVirtualMemory;
 	}
 
@@ -80,7 +74,7 @@ public class MemoryInfo {
 	 *
 	 * @param availableSystemMemory the new available system memory
 	 */
-	public void setAvailableSystemMemory(Long availableSystemMemory) {
+	public void setAvailableSystemMemory(final Long availableSystemMemory) {
 		this.availableSystemMemory = availableSystemMemory;
 	}
 
@@ -99,7 +93,7 @@ public class MemoryInfo {
 	 *
 	 * @param availableVirtualMemory the new available virtual memory
 	 */
-	public void setAvailableVirtualMemory(Long availableVirtualMemory) {
+	public void setAvailableVirtualMemory(final Long availableVirtualMemory) {
 		this.availableVirtualMemory = availableVirtualMemory;
 	}
 

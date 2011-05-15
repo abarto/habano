@@ -37,12 +37,6 @@ public class SystemTimeInfo {
 	private Integer millisecond;
 
 	/**
-	 * Instantiates a new system time info.
-	 */
-	public SystemTimeInfo() {
-	}
-
-	/**
 	 * Property <code>year</code>. Represents the year of the system date/time.
 	 *
 	 * @return the year
@@ -56,7 +50,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param year the new year
 	 */
-	public void setYear(Integer year) {
+	public void setYear(final Integer year) {
 		this.year = year;
 	}
 
@@ -76,7 +70,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param month the new month
 	 */
-	public void setMonth(Integer month) {
+	public void setMonth(final Integer month) {
 		this.month = month;
 	}
 
@@ -95,7 +89,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param dayOfMonth the new day of month
 	 */
-	public void setDayOfMonth(Integer dayOfMonth) {
+	public void setDayOfMonth(final Integer dayOfMonth) {
 		this.dayOfMonth = dayOfMonth;
 	}
 
@@ -115,7 +109,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param dayOfWeek the new day of week
 	 */
-	public void setDayOfWeek(Integer dayOfWeek) {
+	public void setDayOfWeek(final Integer dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
 	}
 
@@ -135,7 +129,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param hour the new hour
 	 */
-	public void setHour(Integer hour) {
+	public void setHour(final Integer hour) {
 		this.hour = hour;
 	}
 
@@ -154,7 +148,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param minute the new minute
 	 */
-	public void setMinute(Integer minute) {
+	public void setMinute(final Integer minute) {
 		this.minute = minute;
 	}
 
@@ -173,7 +167,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param second the new second
 	 */
-	public void setSecond(Integer second) {
+	public void setSecond(final Integer second) {
 		this.second = second;
 	}
 
@@ -192,7 +186,7 @@ public class SystemTimeInfo {
 	 *
 	 * @param millisecond the new millisecond
 	 */
-	public void setMillisecond(Integer millisecond) {
+	public void setMillisecond(final Integer millisecond) {
 		this.millisecond = millisecond;
 	}
 

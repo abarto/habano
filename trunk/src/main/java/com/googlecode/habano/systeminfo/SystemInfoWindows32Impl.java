@@ -41,9 +41,9 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 */
 	@Override
 	public MemoryInfo getMemoryInfo() {
-		MEMORYSTATUSEX lpBuffer = this.callGlobalMemoryStatusEx();
+		final MEMORYSTATUSEX lpBuffer = this.callGlobalMemoryStatusEx();
 
-		MemoryInfo memoryInfo = new MemoryInfo();
+		final MemoryInfo memoryInfo = new MemoryInfo();
 		memoryInfo.setAvailableSystemMemory(lpBuffer.ullAvailPhys);
 		memoryInfo.setAvailableVirtualMemory(lpBuffer.ullAvailVirtual);
 		memoryInfo.setTotalSystemMemory(lpBuffer.ullTotalPhys);
@@ -57,9 +57,9 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 */
 	@Override
 	public SystemTimeInfo getSystemTimeInfo() {
-		SYSTEMTIME lpSystemTime = this.callGetSystemTime();
+		final SYSTEMTIME lpSystemTime = this.callGetSystemTime();
 
-		SystemTimeInfo systemTimeInfo = new SystemTimeInfo();
+		final SystemTimeInfo systemTimeInfo = new SystemTimeInfo();
 		systemTimeInfo.setDayOfMonth(Integer.valueOf(lpSystemTime.wDay));
 		systemTimeInfo.setDayOfWeek(Integer.valueOf(lpSystemTime.wDayOfWeek));
 		systemTimeInfo.setHour(Integer.valueOf(lpSystemTime.wHour));
@@ -77,7 +77,7 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 */
 	@Override
 	public long getSystemTimeInMillis() {
-		FILETIME lpSystemTimeAsFileTime = this.callGetSystemTimeAsFileTime();
+		final FILETIME lpSystemTimeAsFileTime = this.callGetSystemTimeAsFileTime();
 		
 		// convert the FILETIME structure into an 64-bit integer and substract
 		// the difference between FILETIME's epoch and Java's epoch.
@@ -88,21 +88,21 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 * @see com.googlecode.habano.systeminfo.SystemInfo#getFileSystemInfo(java.lang.String)
 	 */
 	@Override
-	public FileSystemInfo getFileSystemInfo(String path) {
-		ULARGE_INTEGER lpFreeBytesAvailable = new ULARGE_INTEGER();
+	public FileSystemInfo getFileSystemInfo(final String path) {
+		final ULARGE_INTEGER lpFreeBytesAvailable = new ULARGE_INTEGER();
 		lpFreeBytesAvailable.setType(Long.class); // select QuadPart
 		
-		ULARGE_INTEGER lpTotalNumberOfBytes = new ULARGE_INTEGER();
+		final ULARGE_INTEGER lpTotalNumberOfBytes = new ULARGE_INTEGER();
 		lpTotalNumberOfBytes.setType(Long.class); // select QuadPart
 		
-		ULARGE_INTEGER lpTotalNumberOfFreeBytes = new ULARGE_INTEGER();
+		final ULARGE_INTEGER lpTotalNumberOfFreeBytes = new ULARGE_INTEGER();
 		lpTotalNumberOfBytes.setType(Long.class); // select QuadPart
 
-		WString lpDirectoryName = new WString(path);
+		final WString lpDirectoryName = new WString(path);
 		
 		Kernel32Dll.INSTANCE.GetDiskFreeSpaceExW(lpDirectoryName, lpFreeBytesAvailable, lpTotalNumberOfBytes, lpTotalNumberOfFreeBytes);
 		
-		FileSystemInfo fileSystemInfo = new FileSystemInfo();
+		final FileSystemInfo fileSystemInfo = new FileSystemInfo();
 		fileSystemInfo.setPath(path);
 		fileSystemInfo.setSize(lpTotalNumberOfBytes.QuadPart);
 		fileSystemInfo.setFreeSpace(lpTotalNumberOfFreeBytes.QuadPart);
@@ -118,7 +118,7 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	private MEMORYSTATUSEX callGlobalMemoryStatusEx() {
 		// Prepare the MEMORYSTATUSEX structure
 		
-		MEMORYSTATUSEX lpBuffer = new MEMORYSTATUSEX();
+		final MEMORYSTATUSEX lpBuffer = new MEMORYSTATUSEX();
 
 		// sizeof(MEMORYSTATUSEX)
 		lpBuffer.dwLength = Native.getNativeSize(MEMORYSTATUSEX.ByValue.class);
@@ -135,7 +135,7 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 * @return the sYSTEMTIME
 	 */
 	private SYSTEMTIME callGetSystemTime() {
-		SYSTEMTIME lpSystemTime = new SYSTEMTIME();
+		final SYSTEMTIME lpSystemTime = new SYSTEMTIME();
 		
 		// Call GetSystemTime on kernel32.dll
 		Kernel32Dll.INSTANCE.GetSystemTime(lpSystemTime);
@@ -149,7 +149,7 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 * @return the fILETIME
 	 */
 	private FILETIME callGetSystemTimeAsFileTime() {
-		FILETIME lpSystemTimeAsFileTime = new FILETIME();
+		final FILETIME lpSystemTimeAsFileTime = new FILETIME();
 		
 		Kernel32Dll.INSTANCE.GetSystemTimeAsFileTime(lpSystemTimeAsFileTime);
 		
@@ -161,19 +161,19 @@ class SystemInfoWindows32Impl extends SystemInfo {
 	 */
 	@Override
 	public SystemArchitectureInfo getSystemArchitectureInfo() {
-		SystemArchitectureInfo systemArchitectureInfo = new SystemArchitectureInfo();
+		final SystemArchitectureInfo systemArchitectureInfo = new SystemArchitectureInfo();
 		
-		SYSTEM_INFO lpSystemInfo = this.callGetSystenInfo();
+		final SYSTEM_INFO lpSystemInfo = this.callGetSystenInfo();
 		
 		systemArchitectureInfo.setCores(lpSystemInfo.dwNumberOfProcessors);
-		systemArchitectureInfo.setX86_64(lpSystemInfo.unnamedUnion.unnamedStructure.wProcessorArchitecture == 9);
+		systemArchitectureInfo.setX8664(lpSystemInfo.unnamedUnion.unnamedStructure.wProcessorArchitecture == 9);
 		
-		char[] lpSubKey = Native.toCharArray("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0");
-		int ulOptions = 0;
-		int samDesired = REGSAM.KEY_READ;
-		IntByReference phkResult = new IntByReference();
+		final char[] lpSubKey = Native.toCharArray("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0");
+		final int ulOptions = 0;
+		final int samDesired = REGSAM.KEY_READ;
+		final IntByReference phkResult = new IntByReference();
 
-		NativeLong regOpenKeyExW = Advapi32Dll.INSTANCE.RegOpenKeyExW(
+		final NativeLong regOpenKeyExW = Advapi32Dll.INSTANCE.RegOpenKeyExW(
 				HKEY.HKEY_LOCAL_MACHINE,
 				lpSubKey,
 				ulOptions,
@@ -181,12 +181,12 @@ class SystemInfoWindows32Impl extends SystemInfo {
 				phkResult);
 		
 		if (ERROR_SUCCESS.equals(regOpenKeyExW)) {
-			char[] lpValueName = Native.toCharArray("VendorIdentifier");
-			IntByReference lpType = new IntByReference();
-			char[] lpData = new char[32768];
-			IntByReference lpcbData = new IntByReference(lpData.length);
+			final char[] lpValueName = Native.toCharArray("VendorIdentifier");
+			final IntByReference lpType = new IntByReference();
+			final char[] lpData = new char[32768];
+			final IntByReference lpcbData = new IntByReference(lpData.length);
 	
-			NativeLong regQueryValueExW = Advapi32Dll.INSTANCE.RegQueryValueExW(
+			final NativeLong regQueryValueExW = Advapi32Dll.INSTANCE.RegQueryValueExW(
 					phkResult.getValue(),
 					lpValueName,
 					null, // lpReserved
@@ -195,14 +195,14 @@ class SystemInfoWindows32Impl extends SystemInfo {
 					lpcbData);
 			
 			if (ERROR_SUCCESS.equals(regQueryValueExW)) {
-				String vendorIdentifier = Native.toString(lpData).trim();
+				final String vendorIdentifier = Native.toString(lpData).trim();
 
 				systemArchitectureInfo.setVendorIdentifier(vendorIdentifier);
 			} else {
 				// TODO Handle error enumerating a registry key value 
 			}
 			
-			NativeLong regCloseKey = Advapi32Dll.INSTANCE.RegCloseKey(phkResult.getValue());
+			final NativeLong regCloseKey = Advapi32Dll.INSTANCE.RegCloseKey(phkResult.getValue());
 			
 			if (!ERROR_SUCCESS.equals(regCloseKey)) {
 				// TODO Handle error closing a registry key handle

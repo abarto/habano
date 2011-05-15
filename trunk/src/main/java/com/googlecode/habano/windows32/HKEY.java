@@ -9,7 +9,14 @@ package com.googlecode.habano.windows32;
  * @author Agustin Barto <abarto@gmail.com>
  *
  */
-public interface HKEY {
+public final class HKEY {
+	
+	/**
+	 * Instantiates a new hKEY.
+	 */
+	private HKEY() {
+	}
+	
 	/**
 	 * HKEY_CLASSES_ROOT. Registry entries subordinate to this key define types
 	 * (or classes) of documents and the properties associated with those
@@ -24,7 +31,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_CLASSES_ROOT = 0x80000000;
+	public static final int HKEY_CLASSES_ROOT = 0x80000000;
 
 	/**
 	 * HKEY_CURRENT_CONFIG. Contains information about the current hardware
@@ -38,7 +45,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a> 
 	 */
-	static final int HKEY_CURRENT_CONFIG = 0x80000005;
+	public static final int HKEY_CURRENT_CONFIG = 0x80000005;
 
 	/**
 	 * HKEY_CURRENT_USER. Registry entries subordinate to this key define the
@@ -64,7 +71,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_CURRENT_USER = 0x80000001;
+	public static final int HKEY_CURRENT_USER = 0x80000001;
 
 	/**
 	 * HKEY_LOCAL_MACHINE. Registry entries subordinate to this key define the
@@ -80,7 +87,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_LOCAL_MACHINE = 0x80000002;
+	public static final int HKEY_LOCAL_MACHINE = 0x80000002;
 
 	/**
 	 * HKEY_PERFORMANCE_DATA. Registry entries subordinate to this key allow
@@ -90,7 +97,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_PERFORMANCE_DATA = 0x80000004;
+	public static final int HKEY_PERFORMANCE_DATA = 0x80000004;
 
 	/**
 	 * HKEY_PERFORMANCE_NLSTEXT. Registry entries subordinate to this key
@@ -101,7 +108,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_PERFORMANCE_NLSTEXT = 0x80000060;
+	public static final int HKEY_PERFORMANCE_NLSTEXT = 0x80000060;
 
 	/**
 	 * HKEY_PERFORMANCE_TEXT. Registry entries subordinate to this key
@@ -111,7 +118,7 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_PERFORMANCE_TEXT = 0x80000050;
+	public static final int HKEY_PERFORMANCE_TEXT = 0x80000050;
 
 	/**
 	 * HKEY_USERS. Registry entries subordinate to this key define the default
@@ -120,5 +127,5 @@ public interface HKEY {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ms724836(VS.85).aspx">Predefined Keys (Windows)</a>
 	 */
-	static final int HKEY_USERS = 0x80000003;
+	public static final int HKEY_USERS = 0x80000003;
 }
