@@ -110,6 +110,11 @@ class SystemInfoWindows32Impl extends SystemInfo {
 		return fileSystemInfo;
 	}
 	
+	/**
+	 * Call global memory status ex.
+	 *
+	 * @return the mEMORYSTATUSEX
+	 */
 	private MEMORYSTATUSEX callGlobalMemoryStatusEx() {
 		// Prepare the MEMORYSTATUSEX structure
 		
@@ -124,6 +129,11 @@ class SystemInfoWindows32Impl extends SystemInfo {
 		return lpBuffer;
 	}
 	
+	/**
+	 * Call get system time.
+	 *
+	 * @return the sYSTEMTIME
+	 */
 	private SYSTEMTIME callGetSystemTime() {
 		SYSTEMTIME lpSystemTime = new SYSTEMTIME();
 		
@@ -133,6 +143,11 @@ class SystemInfoWindows32Impl extends SystemInfo {
 		return lpSystemTime;
 	}
 	
+	/**
+	 * Call get system time as file time.
+	 *
+	 * @return the fILETIME
+	 */
 	private FILETIME callGetSystemTimeAsFileTime() {
 		FILETIME lpSystemTimeAsFileTime = new FILETIME();
 		
@@ -199,6 +214,11 @@ class SystemInfoWindows32Impl extends SystemInfo {
 		return systemArchitectureInfo;
 	}
 	
+	/**
+	 * Call get systen info.
+	 *
+	 * @return the sYSTE m_ info
+	 */
 	private SYSTEM_INFO callGetSystenInfo() {
 		SYSTEM_INFO lpSystemInfo = new SYSTEM_INFO();
 		

@@ -8,12 +8,18 @@ package com.googlecode.habano.systeminfo.beans;
  *
  */
 public class FileSystemInfo {
+	
+	/** The path. */
 	private String path;
+	
+	/** The size. */
 	private long size;
+	
+	/** The free space. */
 	private long freeSpace;
 	
 	/**
-	 * Default no-arguments constructor.
+	 * Instantiates a new file system info.
 	 */
 	public FileSystemInfo() {
 	}
@@ -21,7 +27,9 @@ public class FileSystemInfo {
 	/**
 	 * Property <code>path</code>. The path to the root of the filesystem. It
 	 * might be a mount point ("<code>/home</code>") in Linux/UNIX or a drive
-	 * name in Windows ("<code>C:\</code>"). 
+	 * name in Windows ("<code>C:\</code>").
+	 *
+	 * @return the path
 	 */	
 	public String getPath() {
 		return path;
@@ -29,8 +37,8 @@ public class FileSystemInfo {
 
 	/**
 	 * Setter for the <code>path</code> property.
-	 * 
-	 * @param path
+	 *
+	 * @param path the new path
 	 */
 	public void setPath(String path) {
 		this.path = path;
@@ -38,7 +46,9 @@ public class FileSystemInfo {
 
 	/**
 	 * Property <code>size</code>. The total size of the file system in
-	 * bytes. 
+	 * bytes.
+	 *
+	 * @return the size
 	 */		
 	public long getSize() {
 		return size;
@@ -46,8 +56,8 @@ public class FileSystemInfo {
 
 	/**
 	 * Setter for the <code>size</code> property.
-	 * 
-	 * @param size
+	 *
+	 * @param size the new size
 	 */
 	public void setSize(long size) {
 		this.size = size;
@@ -56,6 +66,8 @@ public class FileSystemInfo {
 	/**
 	 * Property <code>freeSpace</code>. The space available on the file system
 	 * in bytes.
+	 *
+	 * @return the free space
 	 */
 	public long getFreeSpace() {
 		return freeSpace;
@@ -63,8 +75,8 @@ public class FileSystemInfo {
 
 	/**
 	 * Setter for the <code>freeSpace</code> property.
-	 * 
-	 * @param freeSpace
+	 *
+	 * @param freeSpace the new free space
 	 */
 	public void setFreeSpace(long freeSpace) {
 		this.freeSpace = freeSpace;
