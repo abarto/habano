@@ -4,10 +4,7 @@
 package com.googlecode.habano.systeminfo;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Arrays;
 
 import com.googlecode.habano.libc64.CLibrary64;
 import com.googlecode.habano.libc64.statvfs_64;
@@ -17,7 +14,8 @@ import com.googlecode.habano.systeminfo.beans.FileSystemInfo;
 import com.googlecode.habano.systeminfo.beans.MemoryInfo;
 import com.googlecode.habano.systeminfo.beans.SystemArchitectureInfo;
 import com.googlecode.habano.systeminfo.beans.SystemTimeInfo;
-import com.googlecode.habano.util.ProcFsLineHandler;
+import com.googlecode.habano.util.DefaultCpuInfoHandler;
+import com.googlecode.habano.util.DefaultMemInfoHandler;
 import com.googlecode.habano.util.ProcFsProcessor;
 import com.sun.jna.ptr.LongByReference;
 
@@ -37,17 +35,8 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	 */
 	private static final ProcFsProcessor PROC_FS_PROCESSOR = new ProcFsProcessor();
 
-	/** A pattern to extract information from each line of /proc/meminfo. */
-	private static final Pattern MEMINFO_PATTERN = Pattern.compile("^(.*):\\s*(\\d+)\\s*(.*)$");
-
-	/** A pattern to extract information from /proc/cpuinfo. */
-	private static final Pattern CPU_CORES_PATTERN = Pattern.compile("^cpu\\s+cores\\s+:\\s+(\\d+)$");	
-
-	/** A pattern to extract information from /proc/cpuinfo. */
-	private static final Pattern VENDOR_ID_PATTERN = Pattern.compile("^vendor_id\\s+:\\s+(\\w+)$");	
-
-	/** A pattern to extract information from /proc/cpuinfo. */
-	private static final Pattern LONG_MODE_FLAG_PATTERN = Pattern.compile("^flags\\s+:.*\\blm\\b?.*$");	
+	/** The Constant LM. */
+	private static final String LM = "lm";
 
 	/*
 	 * (non-Javadoc)
@@ -59,12 +48,43 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 		final MemoryInfo memoryInfo = new MemoryInfo();
 		
 		try {
-			final Map<String, Long> memInfo = this.readProcFsMemInfo();
-			
-			memoryInfo.setTotalSystemMemory(memInfo.get("MemTotal") * 1000L);
-			memoryInfo.setAvailableSystemMemory(memInfo.get("MemFree") * 1000L);
-			memoryInfo.setTotalVirtualMemory(memInfo.get("SwapTotal") * 1000L);
-			memoryInfo.setAvailableVirtualMemory(memInfo.get("SwapFree") * 1000L);
+			PROC_FS_PROCESSOR.readMemInfo(new DefaultMemInfoHandler() {
+				@Override
+				public Boolean handleMemTotal(Long value) {
+					memoryInfo.setTotalSystemMemory(value * 1000L);
+
+					return (memoryInfo.getAvailableSystemMemory() == null)
+						|| (memoryInfo.getAvailableVirtualMemory() == null)
+						|| (memoryInfo.getTotalVirtualMemory() == null);
+				}
+
+				@Override
+				public Boolean handleMemFree(Long value) {
+					memoryInfo.setAvailableSystemMemory(value * 1000L);
+					
+					return (memoryInfo.getAvailableVirtualMemory() == null)
+					|| (memoryInfo.getTotalSystemMemory() == null)
+					|| (memoryInfo.getTotalVirtualMemory() == null);
+				}
+
+				@Override
+				public Boolean handleSwapTotal(Long value) {
+					memoryInfo.setTotalVirtualMemory(value * 1000L);
+					
+					return (memoryInfo.getAvailableSystemMemory() == null)
+					|| (memoryInfo.getAvailableVirtualMemory() == null)
+					|| (memoryInfo.getTotalSystemMemory() == null);
+				}
+
+				@Override
+				public Boolean handleSwapFree(Long value) {
+					memoryInfo.setAvailableVirtualMemory(value * 1000L);
+					
+					return (memoryInfo.getAvailableSystemMemory() == null)
+					|| (memoryInfo.getTotalSystemMemory() == null)
+					|| (memoryInfo.getTotalVirtualMemory() == null);
+				}
+			});
 		} catch (Exception e) {
 			// TODO Handle /proc/meminfo access exception
 			e.printStackTrace();
@@ -137,32 +157,7 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 		
 		return resultp;
 	} 
-	
-	/**
-	 * Read proc fs mem info.
-	 *
-	 * @return the map
-	 * @throws NumberFormatException the number format exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	private Map<String, Long> readProcFsMemInfo() throws NumberFormatException, IOException {
-		final Map<String, Long> procFsMemInfo = new HashMap<String, Long>();
-
-		PROC_FS_PROCESSOR.readProcFs("/proc/meminfo", new ProcFsLineHandler() {
-			@Override
-			public Boolean processLine(final String entry) {
-				final Matcher matcher = MEMINFO_PATTERN.matcher(entry);
-				
-				if (matcher.matches()) {
-					procFsMemInfo.put(matcher.group(1), Long.valueOf(matcher.group(2)));
-				}
-				
-				return true;
-			}});
 		
-		return procFsMemInfo;
-	}
-	
 	/* (non-Javadoc)
 	 * @see com.googlecode.habano.systeminfo.SystemInfo#getFileSystemInfo(java.lang.String)
 	 */
@@ -198,38 +193,31 @@ public class SystemInfoLinux64Impl extends SystemInfo {
 	@Override
 	public SystemArchitectureInfo getSystemArchitectureInfo() {
 		final SystemArchitectureInfo systemArchitectureInfo = new SystemArchitectureInfo();
-		
+				
 		try {
-			PROC_FS_PROCESSOR.readProcFs("/proc/cpuinfo", new ProcFsLineHandler() {
+			PROC_FS_PROCESSOR.readCpuInfo(new DefaultCpuInfoHandler() {
 				@Override
-				public Boolean processLine(final String line) {
-					if (systemArchitectureInfo.getCores() == null) {
-						final Matcher cpuCoresMatcher = CPU_CORES_PATTERN.matcher(line);
-						
-						if (cpuCoresMatcher.matches()) {
-							systemArchitectureInfo.setCores(Integer.valueOf(cpuCoresMatcher.group(1)));
-						}
-					}
-					
-					if (systemArchitectureInfo.getVendorIdentifier() == null) {
-						final Matcher vendorIdMatcher = VENDOR_ID_PATTERN.matcher(line);
-						
-						if (vendorIdMatcher.matches()) {
-							systemArchitectureInfo.setVendorIdentifier(vendorIdMatcher.group(1));
-						}
-					}
-					
-					if (systemArchitectureInfo.getX8664() == null) {
-						final Matcher longModeFlagMatcher = LONG_MODE_FLAG_PATTERN.matcher(line);
-						
-						if (longModeFlagMatcher.matches()) {
-							systemArchitectureInfo.setX8664(true);
-						}
-					}
+				public Boolean handleVendorId(String value) {
+					systemArchitectureInfo.setVendorIdentifier(value);
 					
 					return (systemArchitectureInfo.getCores() == null)
-						|| (systemArchitectureInfo.getVendorIdentifier() == null)
 						|| (systemArchitectureInfo.getX8664() == null);
+				}
+
+				@Override
+				public Boolean handleCpuCores(Integer value) {
+					systemArchitectureInfo.setCores(value);
+					
+					return (systemArchitectureInfo.getVendorIdentifier() == null)
+					|| (systemArchitectureInfo.getX8664() == null);
+				}
+
+				@Override
+				public Boolean handleFlags(String[] value) {
+					systemArchitectureInfo.setX8664(Arrays.asList(value).contains(LM));
+					
+					return (systemArchitectureInfo.getCores() == null)
+					|| (systemArchitectureInfo.getVendorIdentifier() == null);
 				}
 			});
 		} catch (IOException e) {

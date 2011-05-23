@@ -1,8 +1,8 @@
 package com.googlecode.habano.util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 
@@ -19,29 +19,36 @@ public class ProcFsProcessor {
 	 * turn will return if the processing should continue or not.
 	 *
 	 * @param path The path to process
-	 * @param procFsLineHandler The object that will process each line of the entry.
+	 * @param procFsReaderHandler The object that will process the contents of the procfs entry
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public void readProcFs(final String path, final ProcFsLineHandler procFsLineHandler)
+	private void readProcFs(final String path, final ProcFsStreamHandler procFsReaderHandler)
 			throws IOException {
-		FileReader fileReader = null;
-		BufferedReader bufferedReader = null;
+		InputStream inputStream = null;
 
 		try {
-			fileReader = new FileReader(path);
-			bufferedReader = new BufferedReader(fileReader);
-
-			for (String line = null; (line = bufferedReader.readLine()) != null
-					&& procFsLineHandler.processLine(line);)
-			{}
+			if (procFsReaderHandler.start()) {
+				inputStream = new FileInputStream(path);
+				
+				@SuppressWarnings("unused")
+				Boolean result = procFsReaderHandler.handleContent(inputStream) && procFsReaderHandler.end();
+			}			
 		} finally {
-			if (bufferedReader != null) {
+			if (inputStream != null) {
 				try {
-					bufferedReader.close();
+					inputStream.close();
 				} catch (IOException e) {
 					// Close quietly
 				}
 			}
 		}
+	}
+	
+	public void readCpuInfo(CpuInfoHandler cpuInfoHandler) throws IOException { 
+		this.readProcFs("/proc/cpuinfo", new CpuInfoStreamHandler(cpuInfoHandler));
+	}
+	
+	public void readMemInfo(MemInfoHandler memInfoHandler) throws IOException {
+		this.readProcFs("/proc/meminfo", new MemInfoStreamHandler(memInfoHandler));
 	}
 }
